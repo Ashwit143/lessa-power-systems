@@ -265,7 +265,11 @@ export async function adminListAllProducts(filters: ProductFilters = {}): Promis
 
   query = query.order("created_at", { ascending: false });
 
-  const { data, error } = await query;
+  const { data, error, count } = await query;
+
+  console.log("Supabase data:", data);
+  console.log("Supabase error:", error);
+  console.log("Count:", count);
 
   if (error) return { data: null, error: error.message, success: false };
   return { data: (data?.map(mapProduct) as Product[]) ?? [], error: null, success: true };
