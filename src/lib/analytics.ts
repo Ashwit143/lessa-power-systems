@@ -22,7 +22,7 @@ export type AnalyticsEvent =
   | { name: "cart_opened" }
   | { name: "whatsapp_cta_clicked"; properties: { source: string; productId?: string } }
   | { name: "solar_lead_submitted"; properties: { billRange?: string } }
-  | { name: "contact_form_submitted" }
+  | { name: "contact_form_submitted"; properties?: { subject: string } }
   | { name: "product_search"; properties: { query: string; resultsCount: number } }
   | { name: "category_viewed"; properties: { category: string } }
   | { name: "filter_applied"; properties: { filterType: string; filterValue: string } };

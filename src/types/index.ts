@@ -23,6 +23,7 @@ export interface Product {
   name: string;
   shortDescription: string;
   description: string;
+  features?: string[];
 
   // Categorization
   category: ProductCategory;
@@ -143,7 +144,7 @@ export interface BusinessInfo {
     pincode: string;
     country: string;
   };
-  phones: string[];
+  phones: readonly string[];
   whatsappNumber: string; // Primary WhatsApp contact
   email: string;
   website: string;
@@ -159,8 +160,8 @@ export interface BusinessInfo {
     dealers: string;
     yearsEstablished: string;
   };
-  serviceAreas: string[];
-  businessHours: BusinessHours[];
+  serviceAreas: readonly string[];
+  businessHours: readonly BusinessHours[];
 }
 
 // ---------------------------------------------------------------------------

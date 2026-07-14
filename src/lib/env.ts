@@ -12,14 +12,17 @@ import { z } from "zod";
 
 const envSchema = z.object({
   // Supabase — required in production, optional locally (falls back to static data)
+  // Empty string is treated as "not configured" — use .or(z.literal("")).optional()
   NEXT_PUBLIC_SUPABASE_URL: z
     .string()
     .url("NEXT_PUBLIC_SUPABASE_URL must be a valid URL (e.g. https://xxx.supabase.co)")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z
     .string()
     .min(1, "NEXT_PUBLIC_SUPABASE_ANON_KEY is required when using Supabase")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
 
   // WhatsApp — optional, falls back to default in config.ts
   NEXT_PUBLIC_WHATSAPP_NUMBER: z
@@ -28,19 +31,22 @@ const envSchema = z.object({
       /^91\d{10}$/,
       "NEXT_PUBLIC_WHATSAPP_NUMBER must be in format 91XXXXXXXXXX (e.g. 919347487107)"
     )
-    .optional(),
+    .optional()
+    .or(z.literal("")),
 
   // Site URL — optional, falls back to localhost
   NEXT_PUBLIC_SITE_URL: z
     .string()
     .url("NEXT_PUBLIC_SITE_URL must be a valid URL")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
 
   // Admin (server-side only — never exposed to client)
   SUPABASE_SERVICE_ROLE_KEY: z
     .string()
     .min(1, "SUPABASE_SERVICE_ROLE_KEY is required for admin operations")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
 });
 
 type Env = z.infer<typeof envSchema>;
@@ -77,4 +83,7 @@ export const env = validateEnv();
 // ---------------------------------------------------------------------------
 export const isSupabaseConfigured =
   Boolean(env.NEXT_PUBLIC_SUPABASE_URL) &&
-  Boolean(env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  env.NEXT_PUBLIC_SUPABASE_URL !== "" &&
+  Boolean(env.NEXT_PUBLIC_SUPABASE_ANON_KEY) &&
+  env.NEXT_PUBLIC_SUPABASE_ANON_KEY !== "";
+

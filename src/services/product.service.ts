@@ -1,0 +1,317 @@
+// =============================================================================
+// Product Service
+// Abstracts all product data access. UI components never import Supabase
+// or the static data file directly — they always go through this service.
+//
+// Data source priority:
+//   1. Supabase (when NEXT_PUBLIC_SUPABASE_URL is configured)
+//   2. Static seed data (for local dev / demo)
+// =============================================================================
+
+import type { Product, ProductCategory, PaginationInfo, ApiResponse } from "@/types";
+import { unstable_cache } from "next/cache";
+
+export interface ProductFilters {
+  category?: ProductCategory;
+  subcategory?: string;
+  featured?: boolean;
+  status?: "draft" | "published";
+  search?: string;
+}
+
+export interface ProductListResult {
+  products: Product[];
+  pagination: PaginationInfo;
+}
+
+// ---------------------------------------------------------------------------
+// List products with optional filters and pagination
+// ---------------------------------------------------------------------------
+export const listProducts = unstable_cache(
+  async (
+    filters: ProductFilters = {},
+    page = 1,
+    pageSize = 12
+  ): Promise<ProductListResult> => {
+    return listProductsFromSupabase(filters, page, pageSize);
+  },
+  ["list-products"],
+  { revalidate: 86400, tags: ["products"] }
+);
+
+// ---------------------------------------------------------------------------
+// Get a single product by slug
+// ---------------------------------------------------------------------------
+export const getProductBySlug = unstable_cache(
+  async (slug: string): Promise<Product | null> => {
+    return getProductBySlugFromSupabase(slug);
+  },
+  ["get-product-by-slug"],
+  { revalidate: 86400, tags: ["products"] }
+);
+
+// ---------------------------------------------------------------------------
+// Get featured products for homepage
+// ---------------------------------------------------------------------------
+export const getFeaturedProducts = unstable_cache(
+  async (limit = 8): Promise<Product[]> => {
+    return getFeaturedFromSupabase(limit);
+  },
+  ["get-featured-products"],
+  { revalidate: 86400, tags: ["products"] }
+);
+
+// ---------------------------------------------------------------------------
+// Get products by category
+// ---------------------------------------------------------------------------
+export const getProductsByCategory = unstable_cache(
+  async (category: ProductCategory): Promise<Product[]> => {
+    return getByCategeoryFromSupabase(category);
+  },
+  ["get-products-by-category"],
+  { revalidate: 86400, tags: ["products"] }
+);
+
+// ---------------------------------------------------------------------------
+// Get related products
+// ---------------------------------------------------------------------------
+export const getRelatedProducts = unstable_cache(
+  async (
+    productId: string,
+    category: ProductCategory,
+    limit = 4
+  ): Promise<Product[]> => {
+    return getRelatedFromSupabase(productId, category, limit);
+  },
+  ["get-related-products"],
+  { revalidate: 86400, tags: ["products"] }
+);
+
+// ---------------------------------------------------------------------------
+// Search products
+// ---------------------------------------------------------------------------
+export const searchProducts = unstable_cache(
+  async (query: string): Promise<Product[]> => {
+    return searchFromSupabase(query);
+  },
+  ["search-products"],
+  { revalidate: 86400, tags: ["products"] }
+);
+
+// ---------------------------------------------------------------------------
+// Get all product slugs (for static generation)
+// ---------------------------------------------------------------------------
+export const getAllProductSlugs = unstable_cache(
+  async (): Promise<{ slug: string; category: string }[]> => {
+    return getAllSlugsFromSupabase();
+  },
+  ["get-all-product-slugs"],
+  { revalidate: 86400, tags: ["products"] }
+);
+
+// ===========================================================================
+// Static data implementations
+// ===========================================================================
+
+
+// Supabase implementations
+// ===========================================================================
+
+import { staticSupabase } from "@/lib/supabase/static";
+import { mapProduct } from "@/utils/mapper";
+
+async function listProductsFromSupabase(
+  filters: ProductFilters,
+  page: number,
+  pageSize: number
+): Promise<ProductListResult> {
+  let query = staticSupabase
+    .from("products")
+    .select("id, name, slug, category, short_description, featured_image, specs, featured, status, is_active", { count: "exact" });
+
+  if (filters.category) query = query.eq("category", filters.category);
+  if (filters.subcategory) query = query.eq("subcategory", filters.subcategory);
+  if (filters.featured !== undefined) query = query.eq("featured", filters.featured);
+  if (filters.status) {
+    query = query.eq("status", filters.status);
+  } else {
+    query = query.eq("status", "published");
+  }
+  if (filters.search) {
+    query = query.or(
+      `name.ilike.%${filters.search}%,short_description.ilike.%${filters.search}%`
+    );
+  }
+
+  query = query.eq("is_active", true);
+
+  const offset = (page - 1) * pageSize;
+  query = query.range(offset, offset + pageSize - 1).order("created_at", { ascending: false });
+
+  const { data, error, count } = await query;
+
+  if (error) {
+    console.error("[ProductService] Supabase error:", error.message);
+    return {
+      products: [],
+      pagination: { page, pageSize, total: 0, totalPages: 0 },
+    };
+  }
+
+  const total = count ?? 0;
+  return {
+    products: (data?.map(mapProduct) as Product[]) ?? [],
+    pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
+  };
+}
+
+async function getProductBySlugFromSupabase(slug: string): Promise<Product | null> {
+  const { data, error } = await staticSupabase
+    .from("products")
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_active", true)
+    .single();
+
+  if (error) return null;
+  return mapProduct(data) as Product;
+}
+
+async function getFeaturedFromSupabase(limit: number): Promise<Product[]> {
+  const { data, error } = await staticSupabase
+    .from("products")
+    .select("id, name, slug, category, short_description, featured_image, specs, featured, status, is_active")
+    .eq("featured", true)
+    .eq("is_active", true)
+    .eq("status", "published")
+    .limit(limit)
+    .order("created_at", { ascending: false });
+
+  if (error) return [];
+  return ((data as unknown) as Product[]) ?? [];
+}
+
+async function getByCategeoryFromSupabase(category: ProductCategory): Promise<Product[]> {
+  const { data, error } = await staticSupabase
+    .from("products")
+    .select("id, name, slug, category, short_description, featured_image, specs, featured, status, is_active")
+    .eq("category", category)
+    .eq("is_active", true)
+    .eq("status", "published")
+    .order("featured", { ascending: false });
+
+  if (error) return [];
+  return ((data as unknown) as Product[]) ?? [];
+}
+
+async function getRelatedFromSupabase(
+  productId: string,
+  category: ProductCategory,
+  limit: number
+): Promise<Product[]> {
+  const { data, error } = await staticSupabase
+    .from("products")
+    .select("id, name, slug, category, short_description, featured_image, specs, featured, status, is_active")
+    .eq("category", category)
+    .neq("id", productId)
+    .eq("is_active", true)
+    .eq("status", "published")
+    .limit(limit);
+
+  if (error) return [];
+  return ((data as unknown) as Product[]) ?? [];
+}
+
+async function searchFromSupabase(query: string): Promise<Product[]> {
+  const { data, error } = await staticSupabase
+    .from("products")
+    .select("id, name, slug, category, short_description, featured_image, specs, featured, status, is_active")
+    .or(`name.ilike.%${query}%,short_description.ilike.%${query}%`)
+    .eq("is_active", true)
+    .eq("status", "published")
+    .limit(20);
+
+  if (error) return [];
+  return ((data as unknown) as Product[]) ?? [];
+}
+
+async function getAllSlugsFromSupabase(): Promise<{ slug: string; category: string }[]> {
+  const { data, error } = await staticSupabase
+    .from("products")
+    .select("slug, category")
+    .eq("is_active", true)
+    .eq("status", "published");
+
+  if (error) return [];
+  return (data as { slug: string; category: string }[]) ?? [];
+}
+
+// ---------------------------------------------------------------------------
+// Admin-only: CRUD operations (requires service role key, server-side only)
+// ---------------------------------------------------------------------------
+export async function adminListAllProducts(filters: ProductFilters = {}): Promise<ApiResponse<Product[]>> {
+
+
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+
+  let query = supabase.from("products").select("*");
+
+  if (filters.category) query = query.eq("category", filters.category);
+  if (filters.status) query = query.eq("status", filters.status);
+  if (filters.search) {
+    query = query.or(`name.ilike.%${filters.search}%`);
+  }
+
+  query = query.order("created_at", { ascending: false });
+
+  const { data, error } = await query;
+
+  if (error) return { data: null, error: error.message, success: false };
+  return { data: (data?.map(mapProduct) as Product[]) ?? [], error: null, success: true };
+}
+
+export async function adminCreateProduct(product: Omit<Product, "id" | "createdAt" | "updatedAt">): Promise<ApiResponse<Product>> {
+
+
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("products")
+    .insert({ ...product, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+    .select()
+    .single();
+
+  if (error) return { data: null, error: error.message, success: false };
+  return { data: data as Product, error: null, success: true };
+}
+
+export async function adminUpdateProduct(id: string, updates: Partial<Product>): Promise<ApiResponse<Product>> {
+
+
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("products")
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) return { data: null, error: error.message, success: false };
+  return { data: data as Product, error: null, success: true };
+}
+
+export async function adminDeleteProduct(id: string): Promise<ApiResponse<null>> {
+
+
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("products").delete().eq("id", id);
+
+  if (error) return { data: null, error: error.message, success: false };
+  return { data: null, error: null, success: true };
+}
