@@ -35,7 +35,7 @@ export const listProducts = unstable_cache(
   ): Promise<ProductListResult> => {
     return listProductsFromSupabase(filters, page, pageSize);
   },
-  ["list-products"],
+  ["list-products-v2"],
   { revalidate: 86400, tags: ["products"] }
 );
 
@@ -46,7 +46,7 @@ export const getProductBySlug = unstable_cache(
   async (slug: string): Promise<Product | null> => {
     return getProductBySlugFromSupabase(slug);
   },
-  ["get-product-by-slug"],
+  ["get-product-by-slug-v2"],
   { revalidate: 86400, tags: ["products"] }
 );
 
@@ -57,7 +57,7 @@ export const getFeaturedProducts = unstable_cache(
   async (limit = 8): Promise<Product[]> => {
     return getFeaturedFromSupabase(limit);
   },
-  ["get-featured-products"],
+  ["get-featured-products-v2"],
   { revalidate: 86400, tags: ["products"] }
 );
 
@@ -68,7 +68,7 @@ export const getProductsByCategory = unstable_cache(
   async (category: ProductCategory): Promise<Product[]> => {
     return getByCategeoryFromSupabase(category);
   },
-  ["get-products-by-category"],
+  ["get-products-by-category-v2"],
   { revalidate: 86400, tags: ["products"] }
 );
 
@@ -83,7 +83,7 @@ export const getRelatedProducts = unstable_cache(
   ): Promise<Product[]> => {
     return getRelatedFromSupabase(productId, category, limit);
   },
-  ["get-related-products"],
+  ["get-related-products-v2"],
   { revalidate: 86400, tags: ["products"] }
 );
 
@@ -94,7 +94,7 @@ export const searchProducts = unstable_cache(
   async (query: string): Promise<Product[]> => {
     return searchFromSupabase(query);
   },
-  ["search-products"],
+  ["search-products-v2"],
   { revalidate: 86400, tags: ["products"] }
 );
 
