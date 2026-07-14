@@ -166,18 +166,19 @@ export default function CartPage() {
               </div>
 
               <Button
-                variant="whatsapp"
+                variant="primary"
                 size="lg"
                 fullWidth
-                leftIcon={<MessageCircle className="h-5 w-5" aria-hidden="true" />}
-                onClick={handleSendOrder}
-                id="send-order-whatsapp"
+                asChild
+                id="proceed-to-checkout"
               >
-                Send Order via WhatsApp
+                <Link href="/checkout">
+                  Proceed to Checkout
+                </Link>
               </Button>
 
               <p className="text-xs text-neutral-400 text-center mt-3">
-                This opens WhatsApp with your order pre-filled.
+                You will be able to review your details and send your order via WhatsApp.
                 <br />No payment is processed here.
               </p>
             </div>

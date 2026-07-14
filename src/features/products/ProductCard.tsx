@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, MessageCircle, Tag } from "lucide-react";
 import { motion } from "framer-motion";
@@ -10,7 +9,7 @@ import { Badge } from "@/components/ui/index";
 import { useCart } from "@/features/cart/CartContext";
 import { getSingleProductWhatsAppUrl, openWhatsApp } from "@/utils/whatsapp";
 import { analytics } from "@/lib/analytics";
-import { getProductImage } from "@/utils/image";
+import { ProductImage } from "@/components/ui/ProductImage";
 import type { Product } from "@/types";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -61,8 +60,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         aria-label={`View ${product.name} details`}
       >
         <div className="product-image-container group-hover:bg-neutral-100 transition-colors">
-          <Image
-            src={getProductImage(product.featuredImage)}
+          <ProductImage
+            src={product.featuredImage}
             alt={product.altText ?? product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"

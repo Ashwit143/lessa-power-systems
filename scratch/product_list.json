@@ -1,0 +1,562 @@
+[
+  {
+    "slug": "luminous-liftverter-5",
+    "name": "Luminous Liftverter 5"
+  },
+  {
+    "slug": "luminous-liftverter-5-5",
+    "name": "Luminous Liftverter 5.5"
+  },
+  {
+    "slug": "luminous-liftverter-8",
+    "name": "Luminous Liftverter 8"
+  },
+  {
+    "slug": "luminous-liftverter-12",
+    "name": "Luminous Liftverter 12"
+  },
+  {
+    "slug": "luminous-liftverter-15",
+    "name": "Luminous Liftverter 15"
+  },
+  {
+    "slug": "luminous-liftverter-20",
+    "name": "Luminous Liftverter 20"
+  },
+  {
+    "slug": "luminous-liftverter-30",
+    "name": "Luminous Liftverter 30"
+  },
+  {
+    "slug": "luminous-li-on-1250",
+    "name": "Luminous Li-On 1250"
+  },
+  {
+    "slug": "luminous-icon-1100",
+    "name": "Luminous Icon 1100"
+  },
+  {
+    "slug": "luminous-icon-1600",
+    "name": "Luminous Icon 1600"
+  },
+  {
+    "slug": "luminous-evo-d-700",
+    "name": "Luminous EVO D 700"
+  },
+  {
+    "slug": "luminous-evo-d-800",
+    "name": "Luminous EVO D 800"
+  },
+  {
+    "slug": "luminous-evo-d-900",
+    "name": "Luminous EVO D 900"
+  },
+  {
+    "slug": "luminous-evo-d-1050",
+    "name": "Luminous EVO D 1050"
+  },
+  {
+    "slug": "luminous-evo-d-1250",
+    "name": "Luminous EVO D 1250"
+  },
+  {
+    "slug": "luminous-evo-d-1650",
+    "name": "Luminous EVO D 1650"
+  },
+  {
+    "slug": "luminous-evo-d-2300",
+    "name": "Luminous EVO D 2300"
+  },
+  {
+    "slug": "luminous-eco-watt-neo-700",
+    "name": "Luminous Eco Watt Neo 700"
+  },
+  {
+    "slug": "luminous-eco-watt-neo-800",
+    "name": "Luminous Eco Watt Neo 800"
+  },
+  {
+    "slug": "luminous-eco-watt-neo-900",
+    "name": "Luminous Eco Watt Neo 900"
+  },
+  {
+    "slug": "luminous-eco-watt-neo-1050",
+    "name": "Luminous Eco Watt Neo 1050"
+  },
+  {
+    "slug": "luminous-eco-watt-neo-1250-pro",
+    "name": "Luminous Eco Watt Neo 1250 Pro"
+  },
+  {
+    "slug": "luminous-eco-watt-neo-1650",
+    "name": "Luminous Eco Watt Neo 1650"
+  },
+  {
+    "slug": "luminous-eco-watt-neo-2300",
+    "name": "Luminous Eco Watt Neo 2300"
+  },
+  {
+    "slug": "luminous-evo-s-750",
+    "name": "Luminous EVO S 750"
+  },
+  {
+    "slug": "luminous-evo-s-850",
+    "name": "Luminous EVO S 850"
+  },
+  {
+    "slug": "luminous-evo-s-1050",
+    "name": "Luminous EVO S 1050"
+  },
+  {
+    "slug": "luminous-evo-s-1250",
+    "name": "Luminous EVO S 1250"
+  },
+  {
+    "slug": "luminous-evo-s-1550",
+    "name": "Luminous EVO S 1550"
+  },
+  {
+    "slug": "luminous-evo-s-1650",
+    "name": "Luminous EVO S 1650"
+  },
+  {
+    "slug": "luminous-evo-s-2300",
+    "name": "Luminous EVO S 2300"
+  },
+  {
+    "slug": "luminous-eco-volt-neo-750",
+    "name": "Luminous Eco Volt Neo 750"
+  },
+  {
+    "slug": "luminous-eco-volt-neo-850",
+    "name": "Luminous Eco Volt Neo 850"
+  },
+  {
+    "slug": "luminous-eco-volt-neo-1050",
+    "name": "Luminous Eco Volt Neo 1050"
+  },
+  {
+    "slug": "luminous-eco-volt-neo-1250-plus",
+    "name": "Luminous Eco Volt Neo 1250+"
+  },
+  {
+    "slug": "luminous-eco-volt-neo-1550",
+    "name": "Luminous Eco Volt Neo 1550"
+  },
+  {
+    "slug": "luminous-eco-volt-neo-1650",
+    "name": "Luminous Eco Volt Neo 1650"
+  },
+  {
+    "slug": "luminous-eco-volt-neo-2300",
+    "name": "Luminous Eco Volt Neo 2300"
+  },
+  {
+    "slug": "luminous-zelio-s-1150",
+    "name": "Luminous Zelio S 1150"
+  },
+  {
+    "slug": "luminous-zelio-s-1250",
+    "name": "Luminous Zelio S 1250"
+  },
+  {
+    "slug": "luminous-zelio-s-1550",
+    "name": "Luminous Zelio S 1550"
+  },
+  {
+    "slug": "luminous-zelio-smart-1100",
+    "name": "Luminous Zelio Smart 1100"
+  },
+  {
+    "slug": "luminous-shakti-charge-neo-1150-pro",
+    "name": "Luminous Shakti Charge Neo 1150 Pro"
+  },
+  {
+    "slug": "luminous-shakti-charge-neo-1450-pro",
+    "name": "Luminous Shakti Charge Neo 1450 Pro"
+  },
+  {
+    "slug": "luminous-shakti-charge-neo-1750-pro",
+    "name": "Luminous Shakti Charge Neo 1750 Pro"
+  },
+  {
+    "slug": "luminous-optimus-1250-plus",
+    "name": "Luminous Optimus 1250+"
+  },
+  {
+    "slug": "luminous-optimus-2300-plus",
+    "name": "Luminous Optimus 2300+"
+  },
+  {
+    "slug": "luminous-optimus-2800-plus",
+    "name": "Luminous Optimus 2800+"
+  },
+  {
+    "slug": "luminous-optimus-3500-plus",
+    "name": "Luminous Optimus 3500+"
+  },
+  {
+    "slug": "luminous-optimus-3800-plus",
+    "name": "Luminous Optimus 3800+"
+  },
+  {
+    "slug": "luminous-optimus-4300-plus",
+    "name": "Luminous Optimus 4300+"
+  },
+  {
+    "slug": "luminous-optimus-6000-plus",
+    "name": "Luminous Optimus 6000+"
+  },
+  {
+    "slug": "luminous-optimus-8000-plus",
+    "name": "Luminous Optimus 8000+"
+  },
+  {
+    "slug": "luminous-optimus-11000-plus",
+    "name": "Luminous Optimus 11000+"
+  },
+  {
+    "slug": "luminous-optimus-3p-10-5-kva",
+    "name": "Luminous Optimus 3P 10.5 KVA"
+  },
+  {
+    "slug": "luminous-optimus-3p-15-kva",
+    "name": "Luminous Optimus 3P 15 KVA"
+  },
+  {
+    "slug": "luminous-optimus-3p-20-25-kva",
+    "name": "Luminous Optimus 3P 20-25 KVA"
+  },
+  {
+    "slug": "luminous-optimus-3p-30-50-kva",
+    "name": "Luminous Optimus 3P 30-50 KVA"
+  },
+  {
+    "slug": "luminous-optimus-3p-60-80-kva",
+    "name": "Luminous Optimus 3P 60-80 KVA"
+  },
+  {
+    "slug": "luminous-optimus-3p-105-150-kva",
+    "name": "Luminous Optimus 3P 105-150 KVA"
+  },
+  {
+    "slug": "luminous-optimus-3p-200-250-kva",
+    "name": "Luminous Optimus 3P 200-250 KVA"
+  },
+  {
+    "slug": "luminous-ultra-charge-uctt-18066",
+    "name": "Luminous Ultra Charge UCTT 18066"
+  },
+  {
+    "slug": "luminous-ultra-charge-uctt-24066",
+    "name": "Luminous Ultra Charge UCTT 24066"
+  },
+  {
+    "slug": "luminous-ultra-charge-uctt-25066",
+    "name": "Luminous Ultra Charge UCTT 25066"
+  },
+  {
+    "slug": "luminous-ultra-charge-uctt-25072",
+    "name": "Luminous Ultra Charge UCTT 25072"
+  },
+  {
+    "slug": "luminous-ultra-charge-uctt-26066",
+    "name": "Luminous Ultra Charge UCTT 26066"
+  },
+  {
+    "slug": "luminous-ultra-charge-uctt-28066",
+    "name": "Luminous Ultra Charge UCTT 28066"
+  },
+  {
+    "slug": "luminous-ultra-charge-uctt-29072",
+    "name": "Luminous Ultra Charge UCTT 29072"
+  },
+  {
+    "slug": "luminous-inverlast-iltt-18060-pro",
+    "name": "Luminous Inverlast ILTT 18060 Pro"
+  },
+  {
+    "slug": "luminous-inverlast-iltt-20060",
+    "name": "Luminous Inverlast ILTT 20060"
+  },
+  {
+    "slug": "luminous-inverlast-iltt-20066",
+    "name": "Luminous Inverlast ILTT 20066"
+  },
+  {
+    "slug": "luminous-inverlast-iltt-24060",
+    "name": "Luminous Inverlast ILTT 24060"
+  },
+  {
+    "slug": "luminous-inverlast-iltt-25060",
+    "name": "Luminous Inverlast ILTT 25060"
+  },
+  {
+    "slug": "luminous-inverlast-iltt-26060",
+    "name": "Luminous Inverlast ILTT 26060"
+  },
+  {
+    "slug": "luminous-inverlast-iltt-28060",
+    "name": "Luminous Inverlast ILTT 28060"
+  },
+  {
+    "slug": "luminous-inverlast-iltt-32060",
+    "name": "Luminous Inverlast ILTT 32060"
+  },
+  {
+    "slug": "luminous-shakti-charge-sc-18060",
+    "name": "Luminous Shakti Charge SC 18060"
+  },
+  {
+    "slug": "luminous-shakti-charge-lm-18075",
+    "name": "Luminous Shakti Charge LM 18075"
+  },
+  {
+    "slug": "luminous-red-charge-rc-15000-pro",
+    "name": "Luminous Red Charge RC 15000 Pro"
+  },
+  {
+    "slug": "luminous-red-charge-rc-16000-pro",
+    "name": "Luminous Red Charge RC 16000 Pro"
+  },
+  {
+    "slug": "luminous-red-charge-rc-18000st-pro",
+    "name": "Luminous Red Charge RC 18000ST Pro"
+  },
+  {
+    "slug": "luminous-red-charge-rc-18000-pro",
+    "name": "Luminous Red Charge RC 18000 Pro"
+  },
+  {
+    "slug": "luminous-red-charge-rc-24000-pro",
+    "name": "Luminous Red Charge RC 24000 Pro"
+  },
+  {
+    "slug": "luminous-red-charge-rc-25000-pro",
+    "name": "Luminous Red Charge RC 25000 Pro"
+  },
+  {
+    "slug": "luminous-red-charge-rc-26000-pro",
+    "name": "Luminous Red Charge RC 26000 Pro"
+  },
+  {
+    "slug": "luminous-cruze-lm-51crz105",
+    "name": "Luminous Cruze LM 51CRZ105"
+  },
+  {
+    "slug": "luminous-cruze-lm-51crz105-plus",
+    "name": "Luminous Cruze LM 51CRZ105+"
+  },
+  {
+    "slug": "luminous-cruze-lm-51crz105-pro",
+    "name": "Luminous Cruze LM 51CRZ105 Pro"
+  },
+  {
+    "slug": "luminous-rick-power-plus-rp-13009",
+    "name": "Luminous Rick Power+ RP 13009"
+  },
+  {
+    "slug": "luminous-rick-power-plus-rp-13512",
+    "name": "Luminous Rick Power+ RP 13512"
+  },
+  {
+    "slug": "luminous-rick-power-plus-rp-14012",
+    "name": "Luminous Rick Power+ RP 14012"
+  },
+  {
+    "slug": "luminous-topcon-bifacial-575w",
+    "name": "Luminous TOPCON Bifacial 575W"
+  },
+  {
+    "slug": "luminous-topcon-bifacial-580w",
+    "name": "Luminous TOPCON Bifacial 580W"
+  },
+  {
+    "slug": "luminous-topcon-bifacial-585w",
+    "name": "Luminous TOPCON Bifacial 585W"
+  },
+  {
+    "slug": "luminous-topcon-bifacial-590w",
+    "name": "Luminous TOPCON Bifacial 590W"
+  },
+  {
+    "slug": "luminous-topcon-bifacial-595w",
+    "name": "Luminous TOPCON Bifacial 595W"
+  },
+  {
+    "slug": "luminous-mono-perc-half-cut-540w",
+    "name": "Luminous Mono PERC Half Cut 540W"
+  },
+  {
+    "slug": "luminous-mono-perc-half-cut-545w",
+    "name": "Luminous Mono PERC Half Cut 545W"
+  },
+  {
+    "slug": "luminous-mono-perc-half-cut-550w",
+    "name": "Luminous Mono PERC Half Cut 550W"
+  },
+  {
+    "slug": "luminous-polycrystalline-lum-12170p",
+    "name": "Luminous Polycrystalline LUM 12170P"
+  },
+  {
+    "slug": "luminous-nxg-850e",
+    "name": "Luminous NXG 850e"
+  },
+  {
+    "slug": "luminous-nxg-1150e",
+    "name": "Luminous NXG 1150e"
+  },
+  {
+    "slug": "luminous-nxg-1450e",
+    "name": "Luminous NXG 1450e"
+  },
+  {
+    "slug": "luminous-nxg-1850e",
+    "name": "Luminous NXG 1850e"
+  },
+  {
+    "slug": "luminous-nxg-2350",
+    "name": "Luminous NXG 2350"
+  },
+  {
+    "slug": "luminous-nxg-pro-1kva-12v",
+    "name": "Luminous NXG PRO 1KVA/12V"
+  },
+  {
+    "slug": "luminous-nxg-pro-1kva-24v",
+    "name": "Luminous NXG PRO 1KVA/24V"
+  },
+  {
+    "slug": "luminous-solarverter-pro-2kva-eco",
+    "name": "Luminous Solarverter PRO 2KVA eco"
+  },
+  {
+    "slug": "luminous-solarverter-pro-3kva-eco",
+    "name": "Luminous Solarverter PRO 3KVA eco"
+  },
+  {
+    "slug": "luminous-solarverter-pro-3-5kva",
+    "name": "Luminous Solarverter PRO 3.5KVA"
+  },
+  {
+    "slug": "luminous-solarverter-pro-5kva",
+    "name": "Luminous Solarverter PRO 5KVA"
+  },
+  {
+    "slug": "luminous-solarverter-pro-6kva",
+    "name": "Luminous Solarverter PRO 6KVA"
+  },
+  {
+    "slug": "luminous-solarverter-pro-7-5kva-eco",
+    "name": "Luminous Solarverter PRO 7.5KVA eco"
+  },
+  {
+    "slug": "luminous-solarverter-pro-10-1kva-eco",
+    "name": "Luminous Solarverter PRO 10.1KVA eco"
+  },
+  {
+    "slug": "luminous-solar-nxe-5kva",
+    "name": "Luminous Solar NXE 5KVA"
+  },
+  {
+    "slug": "luminous-solar-nxe-pro-15kva",
+    "name": "Luminous Solar NXE PRO 15KVA"
+  },
+  {
+    "slug": "luminous-nxp-3500",
+    "name": "Luminous NXP 3500"
+  },
+  {
+    "slug": "luminous-nxp-pro-3500",
+    "name": "Luminous NXP PRO 3500"
+  },
+  {
+    "slug": "luminous-nxi-t130",
+    "name": "Luminous NXi T130"
+  },
+  {
+    "slug": "luminous-nxi-t150",
+    "name": "Luminous NXi T150"
+  },
+  {
+    "slug": "luminous-nxi-t310",
+    "name": "Luminous NXi T310"
+  },
+  {
+    "slug": "luminous-hybrid-tx-3kva",
+    "name": "Luminous Hybrid TX 3kVA"
+  },
+  {
+    "slug": "luminous-hybrid-tx-4kva",
+    "name": "Luminous Hybrid TX 4kVA"
+  },
+  {
+    "slug": "luminous-hybrid-tx-5kva",
+    "name": "Luminous Hybrid TX 5kVA"
+  },
+  {
+    "slug": "luminous-scc1206e",
+    "name": "Luminous SCC1206e"
+  },
+  {
+    "slug": "luminous-scc1210e",
+    "name": "Luminous SCC1210e"
+  },
+  {
+    "slug": "luminous-scc1220e",
+    "name": "Luminous SCC1220e"
+  },
+  {
+    "slug": "luminous-scc1250",
+    "name": "Luminous SCC1250"
+  },
+  {
+    "slug": "luminous-scc1206nm",
+    "name": "Luminous SCC1206NM"
+  },
+  {
+    "slug": "luminous-scc1210nm",
+    "name": "Luminous SCC1210NM"
+  },
+  {
+    "slug": "luminous-scc1220nm",
+    "name": "Luminous SCC1220NM"
+  },
+  {
+    "slug": "luminous-lpt-1240l",
+    "name": "Luminous LPT 1240L"
+  },
+  {
+    "slug": "luminous-lpt-1240h",
+    "name": "Luminous LPT 1240H"
+  },
+  {
+    "slug": "luminous-lpt-1280h",
+    "name": "Luminous LPT 1280H"
+  },
+  {
+    "slug": "luminous-lptt-12100h",
+    "name": "Luminous LPTT 12100H"
+  },
+  {
+    "slug": "luminous-lptt-12120h",
+    "name": "Luminous LPTT 12120H"
+  },
+  {
+    "slug": "luminous-lptt-12150l",
+    "name": "Luminous LPTT 12150L"
+  },
+  {
+    "slug": "luminous-lptt-12150h",
+    "name": "Luminous LPTT 12150H"
+  },
+  {
+    "slug": "luminous-lptt-12200l",
+    "name": "Luminous LPTT 12200L"
+  },
+  {
+    "slug": "luminous-lptt-12200h",
+    "name": "Luminous LPTT 12200H"
+  }
+]

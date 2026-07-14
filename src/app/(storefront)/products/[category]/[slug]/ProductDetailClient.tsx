@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { ShoppingCart, MessageCircle, Download, Share2, Tag, ChevronLeft } from "lucide-react";
+import { ShoppingCart, MessageCircle, Download, Share2, Tag } from "lucide-react";
+import { ProductImage } from "@/components/ui/ProductImage";
 import { useCart } from "@/features/cart/CartContext";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/index";
@@ -55,14 +55,14 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
       {/* Image gallery */}
       <div className="space-y-4">
-        <div className="relative aspect-square bg-neutral-50 rounded-xl overflow-hidden border border-neutral-100">
-          <Image
-            src={getProductImage(product.featuredImage)}
+        <div className="aspect-square bg-white rounded-2xl border border-neutral-100 overflow-hidden relative">
+          <ProductImage
+            src={product.featuredImage}
             alt={product.altText ?? product.name}
             fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-contain p-8"
             priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </div>
         {product.gallery && product.gallery.length > 1 && (

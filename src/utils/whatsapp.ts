@@ -25,11 +25,17 @@ export function buildWhatsAppUrl(message: string, number?: string): string {
 // Message formatters
 // ---------------------------------------------------------------------------
 
+export interface CheckoutData {
+  name: string;
+  mobile: string;
+  address: string;
+}
+
 /**
  * Compiles the cart contents into a human-readable order message
  * suitable for WhatsApp.
  */
-export function formatCartOrderMessage(items: CartItem[]): string {
+export function formatCartOrderMessage(items: CartItem[], shippingDetails?: CheckoutData): string {
   if (items.length === 0) {
     return SITE_CONFIG.whatsappMessages.general;
   }
@@ -37,17 +43,32 @@ export function formatCartOrderMessage(items: CartItem[]): string {
   const itemLines = items
     .map(
       (item, index) =>
-        `${index + 1}. ${item.name} — Qty: ${item.quantity}`
+        `${index + 1}. ${item.name} (Qty: ${item.quantity})`
     )
     .join("\n");
 
-  return [
-    SITE_CONFIG.whatsappMessages.orderPrefix,
+  let message = [
+    "Hi Leesa Power Systems! I'd like to place an order.",
+    "",
+    "Order Summary:",
     "",
     itemLines,
-    "",
-    SITE_CONFIG.whatsappMessages.orderSuffix,
   ].join("\n");
+
+  if (shippingDetails) {
+    message += [
+      "",
+      "",
+      "Shipping Details:",
+      "",
+      `Name: ${shippingDetails.name}`,
+      `Mobile: ${shippingDetails.mobile}`,
+      `Address:`,
+      shippingDetails.address,
+    ].join("\n");
+  }
+
+  return message;
 }
 
 /**
@@ -92,8 +113,8 @@ export function formatGeneralEnquiryMessage(): string {
 // Deep link builders — combine message formatter + URL builder
 // ---------------------------------------------------------------------------
 
-export function getCartWhatsAppUrl(items: CartItem[]): string {
-  return buildWhatsAppUrl(formatCartOrderMessage(items));
+export function getCartWhatsAppUrl(items: CartItem[], shippingDetails?: CheckoutData): string {
+  return buildWhatsAppUrl(formatCartOrderMessage(items, shippingDetails));
 }
 
 export function getSingleProductWhatsAppUrl(

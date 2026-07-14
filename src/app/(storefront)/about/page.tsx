@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Award, CheckCircle, Clock, ShieldCheck, Zap } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config";
 import { Button } from "@/components/ui/Button";
+import { AboutGallery } from "@/features/about/AboutGallery";
 
 export const metadata: Metadata = {
   title: `About Us — ${SITE_CONFIG.businessName}`,
@@ -100,6 +101,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Gallery */}
+      <AboutGallery />
 
       {/* CTA */}
       <section className="py-16 bg-white border-t border-neutral-200">

@@ -1,17 +1,22 @@
+import { Skeleton } from "@/components/ui/Skeleton";
 import { ProductCardSkeleton } from "@/features/products/ProductCard";
 
-export default function Loading() {
+export default function HomeLoading() {
   return (
-    <div className="section-padding bg-neutral-50 min-h-screen">
-      <div className="container-site">
-        {/* Header skeleton */}
-        <div className="h-4 w-48 bg-neutral-200 rounded animate-pulse mb-8" />
-        <div className="h-8 w-64 bg-neutral-200 rounded animate-pulse mb-3" />
-        <div className="h-4 w-full max-w-xl bg-neutral-200 rounded animate-pulse mb-10" />
-
-        {/* Grid skeleton */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {Array.from({ length: 8 }).map((_, i) => (
+    <div className="animate-in fade-in duration-500">
+      <Skeleton className="w-full min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] rounded-none bg-neutral-100" />
+      
+      <div className="section-padding container-site">
+        <div className="flex justify-between items-end mb-8">
+          <div>
+            <Skeleton className="h-4 w-32 mb-3" />
+            <Skeleton className="h-8 w-48 sm:h-10 sm:w-64" />
+          </div>
+          <Skeleton className="h-10 w-24 rounded-full hidden sm:block" />
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {Array.from({ length: 4 }).map((_, i) => (
             <ProductCardSkeleton key={i} />
           ))}
         </div>

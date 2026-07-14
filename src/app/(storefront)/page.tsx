@@ -230,7 +230,7 @@ export default async function HomePage() {
 
           <div className="mt-10 text-center">
             <Button variant="outline" size="lg" asChild>
-              <Link href="/products">
+              <Link href="/products" className="inline-flex items-center gap-2 whitespace-nowrap">
                 Browse All Products
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
@@ -239,55 +239,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ================================================================== */}
-      {/* Solar Spotlight Strip */}
-      {/* ================================================================== */}
-      <section
-        className="relative overflow-hidden py-16 lg:py-20"
-        style={{
-          background: "linear-gradient(135deg, #1A1A2E 0%, #0B3D91 60%, #1046A8 100%)",
-        }}
-        aria-labelledby="solar-cta-heading"
-      >
-        {/* Decorative sun element */}
-        <div
-          className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 lg:w-96 lg:h-96 rounded-full opacity-10"
-          style={{ background: "radial-gradient(circle, #F5A623, transparent 70%)" }}
-          aria-hidden="true"
-        />
-
-        <div className="container-site relative z-10">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-4">
-              <Sun className="h-6 w-6 text-accent" aria-hidden="true" />
-              <span className="text-accent text-sm font-bold uppercase tracking-widest">
-                Solar Solutions
-              </span>
-            </div>
-            <h2 id="solar-cta-heading" className="text-page text-white mb-4 text-balance">
-              Thinking About Solar? See How Much You Could Save.
-            </h2>
-            <p className="text-white/75 text-base lg:text-lg mb-8 leading-relaxed">
-              Hyderabad gets excellent sunshine. Let Leesa Power Systems help you install a Luminous solar system — on-grid, off-grid, or hybrid — and cut your electricity bill significantly.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button variant="accent" size="lg" asChild>
-                <Link href="/solar">
-                  Get Free Solar Quote on WhatsApp
-                </Link>
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-white/30 text-white hover:bg-white/10 hover:text-white"
-                asChild
-              >
-                <Link href="/solar#learn-more">Learn More</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ================================================================== */}
       {/* Why Choose Us */}
@@ -342,6 +293,7 @@ export default async function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat on WhatsApp for product enquiry"
+              className="inline-flex items-center gap-2 whitespace-nowrap"
             >
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
               Chat on WhatsApp Now
