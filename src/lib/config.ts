@@ -131,7 +131,7 @@ export const BUSINESS_INFO: BusinessInfo = {
     pincode: SITE_CONFIG.address.pincode,
     country: SITE_CONFIG.address.country,
   },
-  phones: SITE_CONFIG.phones,
+  phones: [...SITE_CONFIG.phones],
   whatsappNumber: SITE_CONFIG.whatsappNumber,
   email: SITE_CONFIG.email,
   website: SITE_CONFIG.siteUrl,
@@ -143,6 +143,6 @@ export const BUSINESS_INFO: BusinessInfo = {
   googleMapsEmbedUrl: SITE_CONFIG.googleMapsEmbedUrl ?? undefined,
   googleMapsUrl: SITE_CONFIG.googleMapsUrl,
   stats: SITE_CONFIG.stats,
-  serviceAreas: SITE_CONFIG.serviceAreas,
-  businessHours: SITE_CONFIG.businessHours,
+  serviceAreas: [...SITE_CONFIG.serviceAreas],
+  businessHours: [...SITE_CONFIG.businessHours],
 };
