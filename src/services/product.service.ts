@@ -150,12 +150,6 @@ async function listProductsFromSupabase(
 
   const { data, error, count } = await query;
 
-  console.log(
-    data?.find((p) => p.name.includes("EVO D"))
-  );
-
-  console.log("Supabase products", data);
-
   if (error) {
     console.error("[ProductService] Supabase error:", error.message);
     return {
@@ -194,7 +188,7 @@ async function getFeaturedFromSupabase(limit: number): Promise<Product[]> {
     .order("created_at", { ascending: false });
 
   if (error) return [];
-  return ((data as unknown) as Product[]) ?? [];
+  return (data?.map(mapProduct) as Product[]) ?? [];
 }
 
 async function getByCategeoryFromSupabase(category: ProductCategory): Promise<Product[]> {
@@ -207,7 +201,7 @@ async function getByCategeoryFromSupabase(category: ProductCategory): Promise<Pr
     .order("featured", { ascending: false });
 
   if (error) return [];
-  return ((data as unknown) as Product[]) ?? [];
+  return (data?.map(mapProduct) as Product[]) ?? [];
 }
 
 async function getRelatedFromSupabase(
@@ -225,7 +219,7 @@ async function getRelatedFromSupabase(
     .limit(limit);
 
   if (error) return [];
-  return ((data as unknown) as Product[]) ?? [];
+  return (data?.map(mapProduct) as Product[]) ?? [];
 }
 
 async function searchFromSupabase(query: string): Promise<Product[]> {
@@ -238,7 +232,7 @@ async function searchFromSupabase(query: string): Promise<Product[]> {
     .limit(20);
 
   if (error) return [];
-  return ((data as unknown) as Product[]) ?? [];
+  return (data?.map(mapProduct) as Product[]) ?? [];
 }
 
 async function getAllSlugsFromSupabase(): Promise<{ slug: string; category: string }[]> {

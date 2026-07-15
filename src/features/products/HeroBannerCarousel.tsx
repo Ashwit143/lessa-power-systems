@@ -111,7 +111,7 @@ export function HeroBannerCarousel({ banners }: HeroBannerCarouselProps) {
           aria-label={`View ${displayBanners[0]?.headline || "Promotion"}`}
         >
           <Image
-            src="/banners/mobile_banner.png"
+            src="/banners/mobile_banner.jpeg"
             alt={displayBanners[0]?.headline || "Featured Promotion"}
             width={768}
             height={768}
