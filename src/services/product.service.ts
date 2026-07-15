@@ -150,6 +150,12 @@ async function listProductsFromSupabase(
 
   const { data, error, count } = await query;
 
+  console.log(
+    data?.find((p) => p.name.includes("EVO D"))
+  );
+
+  console.log("Supabase products", data);
+
   if (error) {
     console.error("[ProductService] Supabase error:", error.message);
     return {
@@ -266,10 +272,6 @@ export async function adminListAllProducts(filters: ProductFilters = {}): Promis
   query = query.order("created_at", { ascending: false });
 
   const { data, error, count } = await query;
-
-  console.log("Supabase data:", data);
-  console.log("Supabase error:", error);
-  console.log("Count:", count);
 
   if (error) return { data: null, error: error.message, success: false };
   return { data: (data?.map(mapProduct) as Product[]) ?? [], error: null, success: true };

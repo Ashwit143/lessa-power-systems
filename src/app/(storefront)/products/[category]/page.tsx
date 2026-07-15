@@ -7,6 +7,7 @@ import { CATEGORIES, getCategoryBySlug } from "@/data/categories";
 import { ProductCard, ProductCardSkeleton } from "@/features/products/ProductCard";
 import { Breadcrumb } from "@/components/ui/forms";
 import { Badge } from "@/components/ui/index";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config";
 import type { ProductCategory } from "@/types";
 
@@ -87,28 +88,79 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
         {/* Pagination */}
         {pagination.totalPages > 1 && (
-          <nav className="mt-10 flex justify-center gap-2" aria-label="Pagination">
-            {Array.from({ length: pagination.totalPages }).map((_, i) => {
-              const p = i + 1;
-              const isActive = p === pagination.page;
-              const href = q
-                ? `/products/${category}?page=${p}&q=${encodeURIComponent(q)}`
-                : `/products/${category}?page=${p}`;
-              return (
-                <Link
-                  key={p}
-                  href={href}
-                  aria-current={isActive ? "page" : undefined}
-                  className={`w-9 h-9 flex items-center justify-center rounded-md text-sm font-semibold transition-colors ${
-                    isActive
-                      ? "bg-primary-700 text-white"
-                      : "bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50"
-                  }`}
-                >
-                  {p}
-                </Link>
-              );
-            })}
+          <nav className="mt-10 flex justify-center items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0" aria-label="Pagination">
+            {/* Previous Button */}
+            {pagination.page > 1 ? (
+              <Link
+                href={
+                  q
+                    ? `/products/${category}?page=${pagination.page - 1}&q=${encodeURIComponent(q)}`
+                    : `/products/${category}?page=${pagination.page - 1}`
+                }
+                aria-label="Go to previous page"
+                className="h-[44px] px-3 sm:px-4 flex-shrink-0 flex items-center justify-center gap-1.5 rounded-md border border-neutral-200 bg-white text-sm font-semibold text-neutral-600 hover:bg-neutral-50 transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                <span>Previous</span>
+              </Link>
+            ) : (
+              <span
+                aria-disabled="true"
+                className="h-[44px] px-3 sm:px-4 flex-shrink-0 flex items-center justify-center gap-1.5 rounded-md border border-neutral-200 bg-neutral-50 text-sm font-semibold text-neutral-400 cursor-not-allowed opacity-60"
+              >
+                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                <span>Previous</span>
+              </span>
+            )}
+
+            {/* Page Numbers */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {Array.from({ length: pagination.totalPages }).map((_, i) => {
+                const p = i + 1;
+                const isActive = p === pagination.page;
+                const href = q
+                  ? `/products/${category}?page=${p}&q=${encodeURIComponent(q)}`
+                  : `/products/${category}?page=${p}`;
+                return (
+                  <Link
+                    key={p}
+                    href={href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`min-w-[44px] h-[44px] flex-shrink-0 flex items-center justify-center rounded-md text-sm font-semibold transition-colors ${
+                      isActive
+                        ? "bg-primary-700 text-white"
+                        : "bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50"
+                    }`}
+                  >
+                    {p}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Next Button */}
+            {pagination.page < pagination.totalPages ? (
+              <Link
+                href={
+                  q
+                    ? `/products/${category}?page=${pagination.page + 1}&q=${encodeURIComponent(q)}`
+                    : `/products/${category}?page=${pagination.page + 1}`
+                }
+                aria-label="Go to next page"
+                className="h-[44px] px-3 sm:px-4 flex-shrink-0 flex items-center justify-center gap-1.5 rounded-md border border-neutral-200 bg-white text-sm font-semibold text-neutral-600 hover:bg-neutral-50 transition-colors"
+              >
+                <span>Next</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+            ) : (
+              <span
+                aria-disabled="true"
+                className="h-[44px] px-3 sm:px-4 flex-shrink-0 flex items-center justify-center gap-1.5 rounded-md border border-neutral-200 bg-neutral-50 text-sm font-semibold text-neutral-400 cursor-not-allowed opacity-60"
+              >
+                <span>Next</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </span>
+            )}
           </nav>
         )}
 

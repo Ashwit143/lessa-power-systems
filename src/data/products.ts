@@ -370,9 +370,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "in-built-battery",
       "li-on"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/li-on-1250.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/li-on-1250.webp"
     ],
     "features": [
       "In-built Lithium-ion battery",
@@ -414,9 +414,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "compact",
       "icon"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/icon-1100.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/icon-1100.webp"
     ],
     "features": [
       "Pure Sinewave technology",
@@ -457,9 +457,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "compact",
       "icon"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/icon-1600.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/icon-1600.webp"
     ],
     "features": [
       "Pure Sinewave technology",
@@ -541,9 +541,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "evo-d"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/evo-d-800.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/evo-d-800.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -667,9 +667,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "evo-d"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/evo-d-1250.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/evo-d-1250.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -709,9 +709,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "evo-d"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/evo-d-1650.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/evo-d-1650.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -751,9 +751,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "evo-d"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/evo-d-2300.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/evo-d-2300.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -793,9 +793,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "eco-watt-neo"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/eco-watt-neo-700.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/eco-watt-neo-700.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -835,9 +835,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "eco-watt-neo"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/eco-watt-neo-800.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/eco-watt-neo-800.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -877,9 +877,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "eco-watt-neo"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/eco-watt-neo-900.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/eco-watt-neo-900.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -1003,9 +1003,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "eco-watt-neo"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/eco-watt-neo-1650.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/eco-watt-neo-1650.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -1045,9 +1045,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "square-wave",
       "eco-watt-neo"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/eco-watt-neo-2300.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/eco-watt-neo-2300.webp"
     ],
     "features": [
       "Modified square wave technology",
@@ -1171,9 +1171,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "evo-s"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/evo-s-1050.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/evo-s-1050.webp"
     ],
     "features": [
       "Silent performance sine wave technology",
@@ -1213,9 +1213,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "evo-s"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/evo-s-1250.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/evo-s-1250.webp"
     ],
     "features": [
       "Silent performance sine wave technology",
@@ -1255,9 +1255,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "evo-s"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/evo-s-1550.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/evo-s-1550.webp"
     ],
     "features": [
       "Silent performance sine wave technology",
@@ -1339,9 +1339,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "evo-s"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/evo-s-2300.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/evo-s-2300.webp"
     ],
     "features": [
       "Silent performance sine wave technology",
@@ -1381,9 +1381,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "eco-volt-neo"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/eco-volt-neo-750.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/eco-volt-neo-750.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -1591,9 +1591,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "eco-volt-neo"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/eco-volt-neo-1650.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/eco-volt-neo-1650.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -1633,9 +1633,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "eco-volt-neo"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/eco-volt-neo-2300.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/eco-volt-neo-2300.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -1676,9 +1676,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "intelligent",
       "zelio-s"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/zelio-s-1150.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/zelio-s-1150.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -1719,9 +1719,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "intelligent",
       "zelio-s"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/zelio-s-1250.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/zelio-s-1250.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -1762,9 +1762,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "intelligent",
       "zelio-s"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/zelio-s-1550.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/zelio-s-1550.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -1976,9 +1976,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-1250-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-1250-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -2019,9 +2019,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-2300-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-2300-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -2062,9 +2062,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-2800-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-2800-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -2105,9 +2105,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-3500-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-3500-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -2148,9 +2148,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-3800-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-3800-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -2191,9 +2191,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-4300-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-4300-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -2234,9 +2234,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-6000-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-6000-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -2277,9 +2277,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-8000-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-8000-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -2320,9 +2320,9 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
       "pure-sine-wave",
       "optimus"
     ],
-    "featuredImage": "/images/categories/inverter.jpg",
+    "featuredImage": "/images/products/inverters/optimus-11000-.webp",
     "gallery": [
-      "/images/categories/inverter.jpg"
+      "/images/products/inverters/optimus-11000-.webp"
     ],
     "features": [
       "Sine wave technology",
@@ -6000,7 +6000,8 @@ export const PLACEHOLDER_PRODUCTS: Product[] = [
     "createdAt": "2026-07-14T13:07:03.250Z",
     "updatedAt": "2026-07-14T13:07:03.250Z"
   }
-];
+]
+  ;
 
 export function getProductsByCategory(category: string): Product[] {
   return PLACEHOLDER_PRODUCTS.filter(
@@ -6035,7 +6036,7 @@ export function getRelatedProducts(
         p.status === "published"
     );
   }
-  
+
   if (related.length < limit) {
     const more = PLACEHOLDER_PRODUCTS.filter(
       (p) =>

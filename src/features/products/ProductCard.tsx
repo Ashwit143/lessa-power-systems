@@ -38,7 +38,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     });
   };
 
-
   return (
     <motion.article
       initial={{ opacity: 0, y: 12 }}

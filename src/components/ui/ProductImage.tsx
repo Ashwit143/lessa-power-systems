@@ -11,7 +11,7 @@ interface ProductImageProps extends Omit<ImageProps, "src" | "alt"> {
 
 export function ProductImage({ src, alt, ...props }: ProductImageProps) {
   const [error, setError] = useState(false);
-  
+
   const finalSrc = error || !src || src.trim() === '' ? getProductImage(null) : src;
 
   return (

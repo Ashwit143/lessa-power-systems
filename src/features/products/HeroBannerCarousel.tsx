@@ -111,7 +111,7 @@ export function HeroBannerCarousel({ banners }: HeroBannerCarouselProps) {
           {displayBanners.map((banner, index) => (
             <div
               key={banner.id}
-              className="relative flex-shrink-0 w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] lg:aspect-auto lg:h-[500px] xl:h-[550px] cursor-pointer overflow-hidden"
+              className="relative flex-shrink-0 w-full h-[180px] min-[390px]:h-[200px] sm:h-[220px] md:h-auto md:aspect-[21/9] lg:aspect-auto lg:h-[500px] xl:h-[550px] cursor-pointer overflow-hidden"
               role="group"
               aria-roledescription="slide"
               aria-label={`Slide ${index + 1} of ${displayBanners.length}: ${banner.headline}`}
@@ -163,18 +163,17 @@ export function HeroBannerCarousel({ banners }: HeroBannerCarouselProps) {
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
-                className={cn(
-                  "w-2.5 h-2.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900 min-h-[44px] min-w-[44px] sm:min-h-[auto] sm:min-w-[auto] flex items-center justify-center",
-                  index === selectedIndex
-                    ? "bg-white scale-125"
-                    : "bg-white/50 hover:bg-white/75"
-                )}
+                className="group flex items-center justify-center min-w-[32px] min-h-[32px] sm:min-w-[auto] sm:min-h-[auto] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
                 aria-label={`Go to slide ${index + 1}`}
                 aria-current={index === selectedIndex ? "true" : "false"}
               >
                 <span className="sr-only">Slide {index + 1}</span>
-                {/* Visual dot for mobile touch target */}
-                <div className={cn("sm:hidden w-2.5 h-2.5 rounded-full", index === selectedIndex ? "bg-white" : "bg-white/50")} />
+                <div className={cn(
+                  "w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 rounded-full transition-all",
+                  index === selectedIndex
+                    ? "bg-white scale-125"
+                    : "bg-white/50 group-hover:bg-white/75"
+                )} />
               </button>
             ))}
           </div>
