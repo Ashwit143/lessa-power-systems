@@ -9,7 +9,7 @@ import { cn } from "@/utils/cn";
 // ---------------------------------------------------------------------------
 const buttonVariants = cva(
   // Base
-  "inline-flex items-center justify-center gap-2 font-semibold rounded-md transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none",
+  "inline-flex items-center justify-center gap-2 font-semibold rounded-md transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none whitespace-nowrap flex-nowrap",
   {
     variants: {
       variant: {
@@ -99,12 +99,25 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       leftIcon,
       rightIcon,
       disabled,
+      asChild,
       children,
       ...props
     },
     ref
   ) => {
     const isDisabled = disabled || isLoading;
+
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children as React.ReactElement<any>, {
+        className: cn(
+          buttonVariants({ variant, size, fullWidth, loading: isLoading }),
+          className,
+          children.props.className
+        ),
+        ref: ref as any,
+        ...props,
+      });
+    }
 
     return (
       <button
@@ -125,9 +138,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </>
         ) : (
           <>
-            {leftIcon && <span aria-hidden="true">{leftIcon}</span>}
-            {children}
-            {rightIcon && <span aria-hidden="true">{rightIcon}</span>}
+            {leftIcon && <span className="flex-shrink-0 flex items-center justify-center" aria-hidden="true">{leftIcon}</span>}
+            <span className="truncate">{children}</span>
+            {rightIcon && <span className="flex-shrink-0 flex items-center justify-center" aria-hidden="true">{rightIcon}</span>}
           </>
         )}
       </button>

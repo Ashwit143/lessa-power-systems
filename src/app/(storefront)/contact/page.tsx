@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config";
 import { ContactForm } from "@/features/contact/ContactForm";
+import { BusinessStatusBadge } from "@/features/contact/BusinessStatusBadge";
 
 export const metadata: Metadata = {
   title: `Contact Us — ${SITE_CONFIG.businessName}`,
@@ -103,13 +104,16 @@ export default function ContactPage() {
                     <Clock className="h-5 w-5 text-primary-700" aria-hidden="true" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-neutral-900 mb-1">Business Hours</h3>
-                    <ul className="space-y-1 text-sm text-neutral-600">
-                      {SITE_CONFIG.businessHours.map((hours, index) => (
+                    <h3 className="font-semibold text-neutral-900 mb-1">
+                      Business Hours
+                      <BusinessStatusBadge />
+                    </h3>
+                    <ul className="space-y-1 text-sm text-neutral-600 mt-2">
+                      {SITE_CONFIG.businessHours.filter(hours => !hours.closed).map((hours, index) => (
                         <li key={index} className="flex justify-between gap-4">
                           <span>{hours.day}</span>
-                          <span className={hours.closed ? "text-error font-medium" : ""}>
-                            {hours.closed ? "Closed" : `${hours.open} - ${hours.close}`}
+                          <span>
+                            {hours.open} - {hours.close}
                           </span>
                         </li>
                       ))}

@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Lightbox } from "@/components/ui/Lightbox";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const galleryImages = [
   { src: "/aboutUs/image.png", alt: "Leesa Power Systems Storefront" },
@@ -16,6 +19,10 @@ const galleryImages = [
 export function AboutGallery() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, skipSnaps: false, align: "start" }, [
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true }),
+  ]);
 
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
@@ -32,25 +39,48 @@ export function AboutGallery() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {galleryImages.map((image, index) => (
-            <button
-              key={index}
-              onClick={() => openLightbox(index)}
-              className="relative aspect-video md:aspect-square bg-neutral-100 rounded-xl overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
-              aria-label={`View larger image: ${image.alt}`}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                loading={index < 2 ? "eager" : "lazy"}
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-            </button>
-          ))}
+        <div className="relative group">
+          <div className="overflow-hidden touch-pan-y" ref={emblaRef}>
+            <div className="flex -ml-4">
+              {galleryImages.map((image, index) => (
+                <div
+                  key={index}
+                  className="flex-[0_0_80%] sm:flex-[0_0_50%] md:flex-[0_0_40%] lg:flex-[0_0_33.333%] min-w-0 pl-4"
+                >
+                  <button
+                    onClick={() => openLightbox(index)}
+                    className="relative aspect-[3/4] w-full bg-neutral-100 rounded-xl overflow-hidden group/btn focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 block"
+                    aria-label={`View larger image: ${image.alt}`}
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover/btn:scale-105"
+                      loading={index < 2 ? "eager" : "lazy"}
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover/btn:bg-black/10 transition-colors duration-300" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={() => emblaApi?.scrollPrev()}
+            className="flex absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center w-10 h-10 bg-white shadow-lg border border-neutral-100 hover:bg-neutral-50 text-neutral-700 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 opacity-0 group-hover:opacity-100 disabled:opacity-0"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+          </button>
+          <button
+            onClick={() => emblaApi?.scrollNext()}
+            className="flex absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center w-10 h-10 bg-white shadow-lg border border-neutral-100 hover:bg-neutral-50 text-neutral-700 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 opacity-0 group-hover:opacity-100 disabled:opacity-0"
+            aria-label="Next image"
+          >
+            <ChevronRight className="h-5 w-5" aria-hidden="true" />
+          </button>
         </div>
 
         <Lightbox

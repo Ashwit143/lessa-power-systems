@@ -29,10 +29,6 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
     });
   };
 
-  const handleOrderNow = () => {
-    analytics.whatsAppClicked("product_detail", product.id);
-    openWhatsApp(getSingleProductWhatsAppUrl(product.name));
-  };
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -107,16 +103,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
         {/* CTA buttons */}
         <div className="flex flex-col gap-3">
-          <Button
-            variant="accent"
-            size="lg"
-            fullWidth
-            leftIcon={<MessageCircle className="h-5 w-5" aria-hidden="true" />}
-            onClick={handleOrderNow}
-            id={`order-whatsapp-${product.id}`}
-          >
-            Order on WhatsApp Now
-          </Button>
+
           <Button
             variant={inCart ? "outline" : "primary"}
             size="lg"

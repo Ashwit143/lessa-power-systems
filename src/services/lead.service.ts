@@ -13,7 +13,7 @@ export async function createLead(
   const { createClient } = await import("@/lib/supabase/server");
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("leads")
     .insert({
       name: input.name,
@@ -24,9 +24,7 @@ export async function createLead(
       status: "new",
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    })
-    .select()
-    .single();
+    });
 
   if (error) {
     // Don't block the WhatsApp redirect if lead logging fails
@@ -34,7 +32,8 @@ export async function createLead(
     return { data: null, error: error.message, success: false };
   }
 
-  return { data: data as Lead, error: null, success: true };
+  // We don't return the inserted lead to avoid RLS SELECT policy violations for anonymous users.
+  return { data: null as any, error: null, success: true };
 }
 
 export async function adminListLeads(

@@ -111,7 +111,7 @@ export function HeroBannerCarousel({ banners }: HeroBannerCarouselProps) {
           {displayBanners.map((banner, index) => (
             <div
               key={banner.id}
-              className="relative flex-shrink-0 w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:h-[550px] cursor-pointer overflow-hidden"
+              className="relative flex-shrink-0 w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] lg:aspect-auto lg:h-[500px] xl:h-[550px] cursor-pointer overflow-hidden"
               role="group"
               aria-roledescription="slide"
               aria-label={`Slide ${index + 1} of ${displayBanners.length}: ${banner.headline}`}
@@ -139,22 +139,22 @@ export function HeroBannerCarousel({ banners }: HeroBannerCarouselProps) {
         </div>
       </div>
 
-      {/* Navigation arrows — desktop only */}
+      {/* Navigation arrows */}
       {displayBanners.length > 1 && (
         <>
           <button
             onClick={scrollPrev}
-            className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white opacity-0 group-hover:opacity-100"
+            className="flex absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-black/10 hover:bg-black/30 md:bg-white/20 md:hover:bg-white/30 backdrop-blur-sm text-white rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
           </button>
           <button
             onClick={scrollNext}
-            className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white opacity-0 group-hover:opacity-100"
+            className="flex absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-black/10 hover:bg-black/30 md:bg-white/20 md:hover:bg-white/30 backdrop-blur-sm text-white rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
             aria-label="Next slide"
           >
-            <ChevronRight className="h-5 w-5" aria-hidden="true" />
+            <ChevronRight className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
           </button>
 
           {/* Pagination dots */}

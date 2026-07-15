@@ -12,7 +12,7 @@ export const SITE_CONFIG = {
   // Default: 9347487107 (confirm primary WhatsApp number with client)
   // -------------------------------------------------------------------------
   whatsappNumber:
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919347487107",
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "917702778412",
 
   // -------------------------------------------------------------------------
   // Business Details (sourced from client's IndiaMART listing)
@@ -23,7 +23,7 @@ export const SITE_CONFIG = {
   email: "leesapowersystems@gmail.com",
   phones: ["7702778412", "9440698412"],
   // Primary display phone — update once client confirms
-  primaryPhone: "9347487107",
+  primaryPhone: "7702778412",
 
   // -------------------------------------------------------------------------
   // Address (verbatim from client's IndiaMART listing)

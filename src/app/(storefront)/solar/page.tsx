@@ -58,32 +58,7 @@ const solarFaqs = getFAQsByCategory("solar");
 export default function SolarPage() {
   return (
     <>
-      {/* ================================================================== */}
-      {/* Stripped Solar Navbar — logo + phone only */}
-      {/* ================================================================== */}
-      <header className="sticky top-0 z-40 bg-white border-b border-neutral-100">
-        <div className="container-site flex items-center justify-between h-16">
-          <Link
-            href="/"
-            className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 rounded-md"
-            aria-label="Leesa Power Systems — Home"
-          >
-            <div className="flex items-center justify-center w-8 h-8 bg-primary-700 rounded-md">
-              <Zap className="h-5 w-5 text-white" aria-hidden="true" />
-            </div>
-            <span className="text-sm font-bold text-primary-700">Leesa Power Systems</span>
-          </Link>
-          <a
-            href={`tel:+91${SITE_CONFIG.primaryPhone}`}
-            className="flex items-center gap-1.5 text-sm font-semibold text-primary-700 hover:text-primary-800 transition-colors"
-            aria-label={`Call us: ${SITE_CONFIG.primaryPhone}`}
-          >
-            <Phone className="h-4 w-4" aria-hidden="true" />
-            <span className="hidden sm:inline">{SITE_CONFIG.primaryPhone}</span>
-            <span className="sm:hidden">Call Us</span>
-          </a>
-        </div>
-      </header>
+
 
       <main id="main-content">
         {/* ================================================================ */}

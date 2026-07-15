@@ -10,6 +10,7 @@ import { SITE_CONFIG } from "@/lib/config";
 import { useCart } from "@/features/cart/CartContext";
 
 const NAV_LINKS = [
+  { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
   { href: "/products/battery", label: "Batteries" },
   { href: "/products/inverter", label: "Inverters" },
@@ -48,17 +49,17 @@ export function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 rounded-md"
+            className="flex items-center gap-2 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 rounded-md"
             aria-label="Leesa Power Systems — Home"
           >
-            <div className="flex items-center justify-center w-8 h-8 bg-primary-700 rounded-md">
+            <div className="flex items-center justify-center w-8 h-8 bg-primary-700 rounded-md flex-shrink-0">
               <Zap className="h-5 w-5 text-white" aria-hidden="true" />
             </div>
-            <div className="hidden sm:block">
-              <p className="text-sm font-bold text-primary-700 leading-tight">
+            <div className="flex flex-col min-w-0">
+              <p className="text-xs sm:text-sm font-bold text-primary-700 leading-tight truncate">
                 Leesa Power Systems
               </p>
-              <p className="text-xs text-neutral-500 leading-tight">
+              <p className="text-[10px] sm:text-xs text-neutral-500 leading-tight truncate">
                 Authorized Luminous Distributor
               </p>
             </div>
@@ -88,15 +89,6 @@ export function Navbar() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2">
-            {/* Phone number — desktop */}
-            <a
-              href={`tel:+91${SITE_CONFIG.primaryPhone}`}
-              className="hidden xl:flex items-center gap-1.5 text-sm font-semibold text-primary-700 hover:text-primary-800 transition-colors px-3 py-2 rounded-md hover:bg-primary-50"
-              aria-label={`Call us: ${SITE_CONFIG.primaryPhone}`}
-            >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              {SITE_CONFIG.primaryPhone}
-            </a>
 
             {/* Cart */}
             <Link
@@ -159,14 +151,6 @@ export function Navbar() {
               </Link>
             ))}
 
-            {/* Mobile phone number */}
-            <a
-              href={`tel:+91${SITE_CONFIG.primaryPhone}`}
-              className="mt-2 flex items-center gap-2 px-4 py-3 bg-primary-50 text-primary-700 rounded-md text-sm font-semibold"
-            >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              Call: {SITE_CONFIG.primaryPhone}
-            </a>
           </nav>
         </div>
       )}

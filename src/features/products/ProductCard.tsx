@@ -38,10 +38,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     });
   };
 
-  const handleOrderNow = () => {
-    analytics.whatsAppClicked("product_card", product.id);
-    openWhatsApp(getSingleProductWhatsAppUrl(product.name));
-  };
 
   return (
     <motion.article
@@ -121,16 +117,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
         {/* Actions */}
         <div className="flex flex-col gap-2 mt-auto pt-2 border-t border-neutral-100">
-          <Button
-            variant="accent"
-            size="sm"
-            fullWidth
-            leftIcon={<MessageCircle className="h-4 w-4" aria-hidden="true" />}
-            onClick={handleOrderNow}
-            id={`order-whatsapp-${product.id}`}
-          >
-            Order on WhatsApp
-          </Button>
+
           <Button
             variant={alreadyInCart ? "outline" : "ghost"}
             size="sm"

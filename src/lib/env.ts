@@ -29,7 +29,7 @@ const envSchema = z.object({
     .string()
     .regex(
       /^91\d{10}$/,
-      "NEXT_PUBLIC_WHATSAPP_NUMBER must be in format 91XXXXXXXXXX (e.g. 919347487107)"
+      "NEXT_PUBLIC_WHATSAPP_NUMBER must be in format 91XXXXXXXXXX (e.g. 917702778412)"
     )
     .optional()
     .or(z.literal("")),
