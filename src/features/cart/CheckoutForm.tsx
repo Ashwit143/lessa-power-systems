@@ -69,12 +69,16 @@ export function CheckoutForm() {
     // Generate URL and open WhatsApp
     const url = getCartWhatsAppUrl(items, data);
     analytics.whatsAppClicked("checkout_form");
-    openWhatsApp(url);
     
-    // Clear cart and redirect
-    clearCart();
-    toast.success("Order request prepared for WhatsApp!");
-    router.push("/");
+    const success = openWhatsApp(url);
+    if (success) {
+      clearCart();
+      localStorage.removeItem("leesa_checkout_details");
+      toast.success("Your order details have been sent to WhatsApp successfully.");
+      router.push("/");
+    } else {
+      toast.error("Failed to open WhatsApp. Please try again.");
+    }
   };
 
   return (

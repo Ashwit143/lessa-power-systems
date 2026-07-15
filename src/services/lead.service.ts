@@ -30,7 +30,7 @@ export async function createLead(
 
   if (error) {
     // Don't block the WhatsApp redirect if lead logging fails
-    console.error("[LeadService] Failed to log lead:", error.message);
+    console.error("[LeadService] Full error:", error);
     return { data: null, error: error.message, success: false };
   }
 

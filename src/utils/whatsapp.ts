@@ -21,6 +21,17 @@ export function buildWhatsAppUrl(message: string, number?: string): string {
   return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 }
 
+export function openWhatsApp(url: string): boolean {
+  try {
+    // Navigate directly in the same tab for best mobile experience
+    window.location.href = url;
+    return true;
+  } catch (error) {
+    console.error("Failed to open WhatsApp:", error);
+    return false;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Message formatters
 // ---------------------------------------------------------------------------
@@ -47,24 +58,25 @@ export function formatCartOrderMessage(items: CartItem[], shippingDetails?: Chec
     )
     .join("\n");
 
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+
   let message = [
     "Hi Leesa Power Systems! I'd like to place an order.",
     "",
     "Order Summary:",
     "",
     itemLines,
+    "",
+    `Total Items: ${totalItems}`
   ].join("\n");
 
   if (shippingDetails) {
-    message += [
-      "",
-      "",
+    message += "\n\n" + [
       "Shipping Details:",
       "",
       `Name: ${shippingDetails.name}`,
       `Mobile: ${shippingDetails.mobile}`,
-      `Address:`,
-      shippingDetails.address,
+      `Address:\n${shippingDetails.address}`,
     ].join("\n");
   }
 
@@ -149,19 +161,4 @@ function formatBillRange(range: string): string {
     above_10000: "Above ₹10,000/month",
   };
   return labels[range] ?? range;
-}
-
-/**
- * Opens a WhatsApp URL in a new tab with graceful fallback.
- * Call this client-side only.
- */
-export function openWhatsApp(url: string): void {
-  if (typeof window === "undefined") return;
-
-  const newTab = window.open(url, "_blank", "noopener,noreferrer");
-
-  // Graceful fallback: if popup was blocked, navigate in same tab
-  if (!newTab) {
-    window.location.href = url;
-  }
 }

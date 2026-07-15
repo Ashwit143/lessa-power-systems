@@ -57,7 +57,7 @@ export const getFeaturedProducts = unstable_cache(
   async (limit = 8): Promise<Product[]> => {
     return getFeaturedFromSupabase(limit);
   },
-  ["get-featured-products-v2"],
+  ["get-featured-products-v4"],
   { revalidate: 86400, tags: ["products"] }
 );
 

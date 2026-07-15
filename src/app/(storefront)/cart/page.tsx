@@ -9,18 +9,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ConfirmDialog } from "@/components/ui/forms";
-import { getCartWhatsAppUrl, openWhatsApp } from "@/utils/whatsapp";
+// unused imports removed
 import { analytics } from "@/lib/analytics";
 
 export default function CartPage() {
   const { items, itemCount, removeItem, updateQuantity, clearCart } = useCart();
   const [showClearConfirm, setShowClearConfirm] = useState(false);
-
-  const handleSendOrder = () => {
-    if (items.length === 0) return;
-    analytics.whatsAppClicked("cart_checkout");
-    openWhatsApp(getCartWhatsAppUrl(items));
-  };
 
   const handleClearCart = () => {
     clearCart();
@@ -166,14 +160,15 @@ export default function CartPage() {
               </div>
 
               <Button
-                variant="primary"
+                variant="whatsapp"
                 size="lg"
                 fullWidth
                 asChild
                 id="proceed-to-checkout"
               >
-                <Link href="/checkout">
-                  Proceed to Checkout
+                <Link href="/checkout" className="flex items-center justify-center gap-2">
+                  <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                  Order on WhatsApp
                 </Link>
               </Button>
 

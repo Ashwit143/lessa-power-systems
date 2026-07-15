@@ -28,10 +28,10 @@ const buttonVariants = cva(
         link: "text-primary-700 underline-offset-4 hover:underline p-0 h-auto focus-visible:ring-primary-600",
       },
       size: {
-        sm:   "px-3 py-1.5 text-sm h-8",
-        md:   "px-4 py-2.5 text-sm h-10",
-        lg:   "px-6 py-3 text-base h-12",
-        xl:   "px-8 py-4 text-base h-14",
+        sm: "px-3 py-1.5 text-sm h-8",
+        md: "px-4 py-2.5 text-sm h-10",
+        lg: "px-6 py-3 text-base h-12",
+        xl: "px-8 py-4 text-base h-14",
         icon: "p-2 h-10 w-10",
       },
       fullWidth: {
@@ -79,7 +79,7 @@ function LoadingSpinner({ className }: { className?: string }) {
 // ---------------------------------------------------------------------------
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   isLoading?: boolean;
   loadingText?: string;
