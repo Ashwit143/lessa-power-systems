@@ -9,7 +9,7 @@
 // =============================================================================
 
 import type { Product, ProductCategory, PaginationInfo, ApiResponse } from "@/types";
-import { unstable_cache } from "next/cache";
+import { unstable_cache, revalidateTag } from "next/cache";
 
 export interface ProductFilters {
   category?: ProductCategory;
@@ -290,6 +290,7 @@ export async function adminCreateProduct(product: Omit<Product, "id" | "createdA
     .single();
 
   if (error) return { data: null, error: error.message, success: false };
+  revalidateTag("products");
   return { data: data as Product, error: null, success: true };
 }
 
@@ -307,6 +308,7 @@ export async function adminUpdateProduct(id: string, updates: Partial<Product>):
     .single();
 
   if (error) return { data: null, error: error.message, success: false };
+  revalidateTag("products");
   return { data: data as Product, error: null, success: true };
 }
 
@@ -319,5 +321,6 @@ export async function adminDeleteProduct(id: string): Promise<ApiResponse<null>>
   const { error } = await supabase.from("products").delete().eq("id", id);
 
   if (error) return { data: null, error: error.message, success: false };
+  revalidateTag("products");
   return { data: null, error: null, success: true };
 }
