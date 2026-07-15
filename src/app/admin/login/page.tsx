@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LogIn, Zap } from "lucide-react";
+import Image from "next/image";
 import { AdminLoginSchema, type AdminLoginInput } from "@/schemas";
 import { Input } from "@/components/ui/forms";
 import { Button } from "@/components/ui/Button";
@@ -43,9 +44,14 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-neutral-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <div className="w-12 h-12 bg-primary-700 rounded-xl flex items-center justify-center shadow-sm">
-            <Zap className="h-7 w-7 text-white" aria-hidden="true" />
-          </div>
+          <Image
+            src="/banners/logo.png"
+            alt="Leesa Power Systems"
+            width={200}
+            height={50}
+            className="h-12 w-auto object-contain"
+            priority
+          />
         </div>
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-neutral-900">
           Admin Portal

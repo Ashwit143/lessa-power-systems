@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, Zap } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config";
 
@@ -29,14 +30,14 @@ export function Footer() {
 
           {/* Brand column */}
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md">
-              <div className="flex items-center justify-center w-9 h-9 bg-primary-700 rounded-md group-hover:bg-primary-600 transition-colors">
-                <Zap className="h-5 w-5 text-white" aria-hidden="true" />
-              </div>
-              <div>
-                <p className="text-sm font-bold text-white leading-tight">Leesa Power Systems</p>
-                <p className="text-xs text-neutral-400 leading-tight">Since {SITE_CONFIG.established}</p>
-              </div>
+            <Link href="/" className="inline-block mb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md">
+              <Image
+                src="/banners/logo.png"
+                alt="Leesa Power Systems"
+                width={200}
+                height={50}
+                className="h-10 w-auto object-contain bg-white/5 p-1 rounded-sm"
+              />
             </Link>
             <p className="text-sm text-neutral-400 leading-relaxed mb-4">
               Authorized Luminous distributor serving Hyderabad since 2009. Genuine products, local service, WhatsApp-first ordering.

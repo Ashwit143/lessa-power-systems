@@ -49,20 +49,17 @@ export function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 rounded-md"
+            className="flex items-center min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 rounded-md py-1"
             aria-label="Leesa Power Systems — Home"
           >
-            <div className="flex items-center justify-center w-8 h-8 bg-primary-700 rounded-md flex-shrink-0">
-              <Zap className="h-5 w-5 text-white" aria-hidden="true" />
-            </div>
-            <div className="flex flex-col min-w-0">
-              <p className="text-xs sm:text-sm font-bold text-primary-700 leading-tight truncate">
-                Leesa Power Systems
-              </p>
-              <p className="text-[10px] sm:text-xs text-neutral-500 leading-tight truncate">
-                Authorized Luminous Distributor
-              </p>
-            </div>
+            <Image
+              src="/banners/logo.png"
+              alt="Leesa Power Systems"
+              width={250}
+              height={60}
+              className="h-10 sm:h-12 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
