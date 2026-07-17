@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { SolarLeadForm } from "@/features/solar/SolarLeadForm";
 import { SolarSystemCards } from "@/features/solar/SolarSystemCards";
 import { Accordion } from "@/components/ui/forms";
 import { Button } from "@/components/ui/Button";
 import { SITE_CONFIG } from "@/lib/config";
 import { FAQS, getFAQsByCategory } from "@/data/faqs";
-import { MessageCircle, Sun, CheckCircle, Star, MapPin, Award, Calendar, Phone } from "lucide-react";
+import { MessageCircle, Sun, CheckCircle, Star, MapPin, Award, Calendar } from "lucide-react";
 
 // Statically rendered for maximum performance (ad landing page)
 export const dynamic = "force-static";
@@ -67,47 +66,63 @@ export default function SolarPage() {
   return (
     <>
       <main id="main-content">
-        {/* ================================================================ */}
-        {/* Hero — Separate desktop & mobile banners via next/image          */}
-        {/* ================================================================ */}
+        {/*
+          ================================================================
+          Hero — Luminous-style: full banner, no crop, no object-cover
+          ================================================================
+          Structure mirrors the official Luminous website:
+          • <picture> element handles desktop / mobile source switching.
+            The browser loads ONLY the appropriate image — no JS needed.
+          • <img> inside picture uses w-full h-full so the image fills
+            its natural width and the section height follows the image.
+          • The <section> is position:relative; content + overlay are
+            position:absolute over the same element.
+          • No fill prop, no object-cover, no fixed aspect-ratio container.
+          ================================================================
+        */}
         <section
-          className="relative overflow-hidden"
+          className="relative"
           aria-labelledby="solar-hero-heading"
         >
-          {/* Desktop banner (md and above) — preloaded as LCP element */}
-          <div className="hidden md:block relative w-full" style={{ aspectRatio: "1717/916" }}>
-            <Image
+          {/* ── Responsive banner image (picture + img, Luminous-style) ── */}
+          <picture>
+            {/* Mobile source — loaded only below 768 px */}
+            {/* Matches Homepage mobile dimensions: 525x473 */}
+            <source
+              srcSet="/banners/solar-mobile.webp"
+              media="(max-width: 767px)"
+              type="image/webp"
+              width={525}
+              height={473}
+            />
+            {/* Default / desktop source */}
+            {/* Matches Homepage desktop dimensions: 1600x492 */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/banners/solar-desktop.webp"
               alt="Solar panels installation — Leesa Power Systems"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
+              width={1600}
+              height={492}
+              decoding="async"
+              fetchPriority="high"
+              loading="eager"
+              className="w-full h-full block object-cover"
+              style={{ display: "block", aspectRatio: "1600/492" }}
             />
-            {/* Dark overlay for text readability */}
-            <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
-          </div>
+          </picture>
 
-          {/* Mobile banner (below md) — preloaded as LCP element */}
-          <div className="block md:hidden relative w-full" style={{ aspectRatio: "1024/1536" }}>
-            <Image
-              src="/banners/solar-mobile.webp"
-              alt="Solar panels installation — Leesa Power Systems"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
-            {/* Dark overlay */}
-            <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
-          </div>
+          {/* ── Dark gradient overlay for text readability ───────────── */}
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/35 to-transparent"
+            aria-hidden="true"
+          />
 
-          {/* Hero content — absolutely positioned over banner */}
+          {/* ── Hero content — layered above the banner ───────────────── */}
           <div className="absolute inset-0 flex items-center">
-            <div className="container-site w-full py-10 md:py-0">
-              <div className="max-w-3xl">
+            <div className="container-site w-full py-8 md:py-0">
+              <div className="max-w-2xl">
                 {/* Eyebrow */}
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-3 md:mb-4">
                   <Sun className="h-5 w-5 text-accent" aria-hidden="true" />
                   <span className="text-accent text-xs font-bold uppercase tracking-widest">
                     Solar Solutions — Hyderabad
@@ -117,22 +132,22 @@ export default function SolarPage() {
                 {/* Heading */}
                 <h1
                   id="solar-hero-heading"
-                  className="text-hero text-white mb-4 text-balance"
+                  className="text-hero text-white mb-3 md:mb-4 text-balance"
                 >
                   Complete Solar Power Solutions
                 </h1>
 
                 {/* Subheading */}
-                <p className="text-white/85 text-base md:text-lg mb-6 leading-relaxed max-w-2xl">
+                <p className="hidden sm:block text-white/90 text-base md:text-lg mb-5 md:mb-6 leading-relaxed">
                   We design, supply, install, and maintain reliable solar power solutions for homes, businesses, and commercial facilities.
                 </p>
 
                 {/* Highlight chips */}
-                <ul className="flex flex-wrap gap-2 mb-8" aria-label="Service highlights">
+                <ul className="flex flex-wrap gap-1.5 md:gap-2 mb-5 md:mb-8" aria-label="Service highlights">
                   {HERO_HIGHLIGHTS.map((highlight) => (
                     <li
                       key={highlight}
-                      className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1 text-white text-xs font-semibold"
+                      className="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full px-2.5 md:px-3 py-1 text-white text-[10px] md:text-xs font-semibold"
                     >
                       <CheckCircle className="h-3 w-3 text-accent flex-shrink-0" aria-hidden="true" />
                       {highlight}
@@ -141,7 +156,7 @@ export default function SolarPage() {
                 </ul>
 
                 {/* CTAs */}
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex flex-col sm:flex-row gap-2.5 md:gap-3">
                   <Button variant="accent" size="lg" asChild>
                     <Link
                       href="/products/solar"
