@@ -79,6 +79,64 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               <ProductCard key={product.id} product={product} priority={index < 4} />
             ))}
           </div>
+        ) : category === "combo" ? (
+          /* ─── Combo Coming Soon — elegant illustrated empty state ─── */
+          <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
+            {/* Illustration */}
+            <div className="mb-8 w-48 h-48 flex items-center justify-center" aria-hidden="true">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                {/* Background circle */}
+                <circle cx="100" cy="100" r="90" fill="#EFF6FF" />
+                {/* Battery shape */}
+                <rect x="30" y="85" width="75" height="50" rx="6" fill="#DBEAFE" stroke="#93C5FD" strokeWidth="2"/>
+                <rect x="28" y="95" width="4" height="30" rx="2" fill="#60A5FA"/>
+                <rect x="105" y="95" width="6" height="10" rx="2" fill="#93C5FD"/>
+                {/* Battery segments */}
+                <rect x="36" y="93" width="14" height="34" rx="3" fill="#3B82F6" opacity="0.7"/>
+                <rect x="54" y="93" width="14" height="34" rx="3" fill="#3B82F6" opacity="0.5"/>
+                <rect x="72" y="93" width="14" height="34" rx="3" fill="#3B82F6" opacity="0.3"/>
+                {/* Inverter shape */}
+                <rect x="115" y="70" width="60" height="80" rx="8" fill="#DBEAFE" stroke="#93C5FD" strokeWidth="2"/>
+                {/* Inverter display */}
+                <rect x="122" y="80" width="46" height="28" rx="4" fill="#1D4ED8" opacity="0.15"/>
+                <rect x="126" y="84" width="38" height="20" rx="2" fill="#1D4ED8" opacity="0.3"/>
+                {/* Inverter LEDs */}
+                <circle cx="128" cy="120" r="4" fill="#22C55E"/>
+                <circle cx="141" cy="120" r="4" fill="#3B82F6"/>
+                {/* Lightning bolt */}
+                <path d="M95 55 L85 75 H97 L87 95 L107 70 H95 L105 55 Z" fill="#F59E0B" opacity="0.9"/>
+                {/* Stars */}
+                <circle cx="50" cy="45" r="3" fill="#FCD34D" opacity="0.7"/>
+                <circle cx="160" cy="50" r="2" fill="#FCD34D" opacity="0.5"/>
+                <circle cx="35" cy="155" r="2.5" fill="#93C5FD" opacity="0.6"/>
+                <circle cx="170" cy="160" r="3" fill="#93C5FD" opacity="0.5"/>
+              </svg>
+            </div>
+
+            <span className="inline-block px-3 py-1 bg-primary-50 text-primary-700 text-xs font-bold rounded-full uppercase tracking-widest mb-4">
+              Coming Soon
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-3">
+              Exciting Combos on the Way
+            </h2>
+            <p className="text-neutral-500 max-w-md leading-relaxed mb-8">
+              We&apos;re putting together the best inverter + battery combo deals for you — expert-matched sets ready to install. Check back soon!
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Link
+                href="/products/inverter"
+                className="px-5 py-2.5 bg-primary-700 text-white text-sm font-semibold rounded-lg hover:bg-primary-800 transition-colors"
+              >
+                Browse Inverters
+              </Link>
+              <Link
+                href="/products/battery"
+                className="px-5 py-2.5 bg-white border border-neutral-200 text-neutral-700 text-sm font-semibold rounded-lg hover:border-primary-300 hover:text-primary-700 transition-colors"
+              >
+                Browse Batteries
+              </Link>
+            </div>
+          </div>
         ) : (
           <div className="text-center py-16 text-neutral-500">
             <p className="text-lg font-medium mb-2">No products found</p>

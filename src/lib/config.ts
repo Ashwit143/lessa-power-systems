@@ -21,7 +21,7 @@ export const SITE_CONFIG = {
   tagline: "Hyderabad's Trusted Luminous Distributor",
   established: 2009,
   email: "leesapowersystems@gmail.com",
-  phones: ["7702778412", "9440698412"],
+  phones: ["7702778412", "8121515858"],
   // Primary display phone — update once client confirms
   primaryPhone: "7702778412",
 

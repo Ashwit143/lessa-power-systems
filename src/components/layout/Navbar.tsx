@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ShoppingCart, Menu, X, Phone, Zap } from "lucide-react";
+import { ShoppingCart, Menu, X, Phone } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { SITE_CONFIG } from "@/lib/config";
 import { useCart } from "@/features/cart/CartContext";
@@ -87,6 +87,27 @@ export function Navbar() {
           {/* Right actions */}
           <div className="flex items-center gap-2">
 
+            {/* Phone numbers — visible on md and above */}
+            <div className="hidden md:flex items-center gap-3 mr-1" aria-label="Contact phone numbers">
+              <a
+                href={`tel:+91${SITE_CONFIG.phones[0]}`}
+                className="flex items-center gap-1.5 text-xs font-semibold text-primary-700 hover:text-primary-800 transition-colors group"
+                aria-label={`Call ${SITE_CONFIG.phones[0]}`}
+              >
+                <Phone className="h-3.5 w-3.5 group-hover:scale-110 transition-transform" aria-hidden="true" />
+                <span>{SITE_CONFIG.phones[0]}</span>
+              </a>
+              <span className="h-4 w-px bg-neutral-200" aria-hidden="true" />
+              <a
+                href={`tel:+91${SITE_CONFIG.phones[1]}`}
+                className="flex items-center gap-1.5 text-xs font-semibold text-primary-700 hover:text-primary-800 transition-colors group"
+                aria-label={`Call ${SITE_CONFIG.phones[1]}`}
+              >
+                <Phone className="h-3.5 w-3.5 group-hover:scale-110 transition-transform" aria-hidden="true" />
+                <span>{SITE_CONFIG.phones[1]}</span>
+              </a>
+            </div>
+
             {/* Cart */}
             <Link
               href="/cart"
@@ -147,6 +168,27 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Mobile contact numbers — shown only below md (md+ uses navbar inline) */}
+            <div className="md:hidden mt-3 pt-3 border-t border-neutral-100" aria-label="Contact phone numbers">
+              <p className="px-4 pb-2 text-xs font-bold text-neutral-400 uppercase tracking-wider">Call Us</p>
+              <a
+                href={`tel:+91${SITE_CONFIG.phones[0]}`}
+                className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-primary-700 hover:bg-primary-50 transition-colors"
+                aria-label={`Call ${SITE_CONFIG.phones[0]}`}
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" />
+                📞 {SITE_CONFIG.phones[0]}
+              </a>
+              <a
+                href={`tel:+91${SITE_CONFIG.phones[1]}`}
+                className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-primary-700 hover:bg-primary-50 transition-colors"
+                aria-label={`Call ${SITE_CONFIG.phones[1]}`}
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" />
+                📞 {SITE_CONFIG.phones[1]}
+              </a>
+            </div>
 
           </nav>
         </div>

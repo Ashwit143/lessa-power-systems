@@ -39,20 +39,20 @@ export const CATEGORIES: Category[] = [
     featuredImage: "/images/categories/solar.webp",
     isActive: true,
     sortOrder: 3,
-  }
-  // {
-  //   id: "cat-combo",
-  //   slug: "combo",
-  //   name: "Combos",
-  //   shortName: "Combos",
-  //   description:
-  //     "Pre-matched inverter + battery + trolley combos — everything you need for a home UPS installation in one package. Matched by our experts for optimal performance.",
-  //   valueProp: "Complete inverter + battery sets, ready to install",
-  //   icon: "Package",
-  //   featuredImage: "/images/categories/combos.webp",
-  //   isActive: true,
-  //   sortOrder: 4,
-  // },
+  },
+  {
+    id: "cat-combo",
+    slug: "combo",
+    name: "Best Combos",
+    shortName: "Combos",
+    description:
+      "Pre-matched inverter + battery + trolley combos — everything you need for a home UPS installation in one package. Matched by our experts for optimal performance.",
+    valueProp: "Complete inverter + battery sets, ready to install",
+    icon: "Package",
+    featuredImage: "/images/categories/combos.webp",
+    isActive: true,
+    sortOrder: 4,
+  },
 ];
 
 export const CATEGORY_SLUGS = CATEGORIES.map((c) => c.slug);

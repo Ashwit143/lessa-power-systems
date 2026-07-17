@@ -41,9 +41,18 @@ export default function AboutPage() {
             <h1 className="text-page text-neutral-900 mt-2 mb-6">
               Powering Hyderabad Since {SITE_CONFIG.established}
             </h1>
-            <p className="text-lg text-neutral-600 leading-relaxed">
-              {SITE_CONFIG.businessName} is one of Hyderabad's most trusted authorized Luminous channel partners. 
-              We specialize in providing reliable power backup and solar solutions for homes, businesses, and industrial applications.
+            <p className="text-lg text-neutral-600 leading-relaxed mb-4">
+              {SITE_CONFIG.businessName} was founded in 2009 with a straightforward goal: give Hyderabad homeowners and businesses access to reliable power backup without the confusion or the risk of counterfeit products.
+              Over the years, we built a strong partnership with Luminous Power Technologies, becoming one of the city&apos;s authorized channel partners for their full range of inverters, batteries, and solar systems.
+            </p>
+            <p className="text-neutral-600 leading-relaxed mb-4">
+              Every product we sell comes directly through Luminous&apos;s authorized supply chain — no grey market, no shortcuts.
+              Customers who walk in or reach out on WhatsApp know that what they&apos;re buying is exactly what it says on the box, backed by the full manufacturer warranty.
+            </p>
+            <p className="text-neutral-600 leading-relaxed">
+              Our technical team handles installations across Hyderabad, from straightforward home UPS setups to larger commercial solar systems.
+              We stay in touch after every install — for AMC, warranty service, or just a question about the system — because we believe the relationship matters well beyond the point of sale.
+              That commitment to honest advice, quality products, and real after-sales service is what has kept customers coming back to us for over {new Date().getFullYear() - SITE_CONFIG.established} years.
             </p>
           </div>
         </div>

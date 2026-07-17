@@ -96,13 +96,13 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
         {/* Key specs — first 2 */}
         {product.specs.slice(0, 2).length > 0 && (
-          <ul className="flex flex-wrap gap-2" aria-label="Key specifications">
+          <ul className="flex flex-wrap gap-1.5" aria-label="Key specifications">
             {product.specs.slice(0, 2).map((spec) => (
               <li
                 key={spec.label}
-                className="text-xs bg-neutral-50 border border-neutral-200 rounded-sm px-2 py-0.5 text-neutral-600"
+                className="text-xs bg-primary-50 border border-primary-200 rounded-sm px-2.5 py-1 text-primary-800 font-semibold min-h-[24px] flex items-center break-words"
               >
-                <span className="font-medium">{spec.label}:</span> {spec.value}
+                <span className="font-bold">{spec.label}:</span>&nbsp;{spec.value}
               </li>
             ))}
           </ul>

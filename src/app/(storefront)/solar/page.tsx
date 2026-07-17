@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Zap, Phone } from "lucide-react";
+import Image from "next/image";
 import { SolarLeadForm } from "@/features/solar/SolarLeadForm";
 import { SolarSystemCards } from "@/features/solar/SolarSystemCards";
 import { Accordion } from "@/components/ui/forms";
 import { Button } from "@/components/ui/Button";
 import { SITE_CONFIG } from "@/lib/config";
 import { FAQS, getFAQsByCategory } from "@/data/faqs";
-import { MessageCircle, Sun, CheckCircle, Star, MapPin, Award, Calendar } from "lucide-react";
+import { MessageCircle, Sun, CheckCircle, Star, MapPin, Award, Calendar, Phone } from "lucide-react";
 
 // Statically rendered for maximum performance (ad landing page)
 export const dynamic = "force-static";
@@ -27,6 +27,14 @@ export const metadata: Metadata = {
   // No index override — solar page should be indexed for organic traffic
   robots: { index: true, follow: true },
 };
+
+const HERO_HIGHLIGHTS = [
+  "Residential / Household Solar",
+  "Commercial & Industrial Solar",
+  "Professional Installation",
+  "Genuine Luminous Products",
+  "Reliable After-Sales Support",
+];
 
 const TRUST_INDICATORS = [
   { icon: Award, label: "Authorized Distributor" },
@@ -58,67 +66,106 @@ const solarFaqs = getFAQsByCategory("solar");
 export default function SolarPage() {
   return (
     <>
-
-
       <main id="main-content">
         {/* ================================================================ */}
-        {/* Hero */}
+        {/* Hero — Separate desktop & mobile banners via next/image          */}
         {/* ================================================================ */}
         <section
-          className="relative overflow-hidden py-16 lg:py-24"
-          style={{ background: "linear-gradient(135deg, #1A1A2E 0%, #0B3D91 70%)" }}
+          className="relative overflow-hidden"
           aria-labelledby="solar-hero-heading"
         >
-          {/* Decorative */}
-          <div
-            className="absolute top-0 right-0 w-72 h-72 lg:w-96 lg:h-96 rounded-full opacity-15 -translate-y-1/4 translate-x-1/4"
-            style={{ background: "radial-gradient(circle, #F5A623, transparent 70%)" }}
-            aria-hidden="true"
-          />
+          {/* Desktop banner (md and above) — preloaded as LCP element */}
+          <div className="hidden md:block relative w-full" style={{ aspectRatio: "1717/916" }}>
+            <Image
+              src="/banners/solar-desktop.webp"
+              alt="Solar panels installation — Leesa Power Systems"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+          </div>
 
-          <div className="container-site relative z-10">
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-2 mb-4">
-                <Sun className="h-6 w-6 text-accent" aria-hidden="true" />
-                <span className="text-accent text-sm font-bold uppercase tracking-widest">
-                  Solar Solutions — Hyderabad
-                </span>
-              </div>
-              <h1 id="solar-hero-heading" className="text-hero text-white mb-6 text-balance">
-                Cut Your Electricity Bill With Solar
-              </h1>
-              <p className="text-white/80 text-lg mb-8 leading-relaxed max-w-2xl">
-                Hyderabad gets excellent sunshine year-round. Leesa Power Systems — Hyderabad's trusted Luminous solar partner — installs on-grid, off-grid, and hybrid solar systems for homes and businesses.
-              </p>
+          {/* Mobile banner (below md) — preloaded as LCP element */}
+          <div className="block md:hidden relative w-full" style={{ aspectRatio: "1024/1536" }}>
+            <Image
+              src="/banners/solar-mobile.webp"
+              alt="Solar panels installation — Leesa Power Systems"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+            {/* Dark overlay */}
+            <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+          </div>
 
-              {/* Trust indicators */}
-              <div className="flex flex-wrap gap-3 mb-10">
-                {TRUST_INDICATORS.map((t) => {
-                  const Icon = t.icon;
-                  return (
-                    <div
-                      key={t.label}
-                      className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 text-white text-xs font-semibold"
-                    >
-                      <Icon className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                      {t.label}
-                    </div>
-                  );
-                })}
-              </div>
+          {/* Hero content — absolutely positioned over banner */}
+          <div className="absolute inset-0 flex items-center">
+            <div className="container-site w-full py-10 md:py-0">
+              <div className="max-w-3xl">
+                {/* Eyebrow */}
+                <div className="flex items-center gap-2 mb-4">
+                  <Sun className="h-5 w-5 text-accent" aria-hidden="true" />
+                  <span className="text-accent text-xs font-bold uppercase tracking-widest">
+                    Solar Solutions — Hyderabad
+                  </span>
+                </div>
 
-              <Button variant="accent" size="xl" asChild>
-                <a
-                  href={`https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessages.solarEnquiry)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  id="solar-hero-cta"
-                  aria-label="Get free solar quote on WhatsApp"
+                {/* Heading */}
+                <h1
+                  id="solar-hero-heading"
+                  className="text-hero text-white mb-4 text-balance"
                 >
-                  <MessageCircle className="h-5 w-5" aria-hidden="true" />
-                  Get Free Solar Quote on WhatsApp
-                </a>
-              </Button>
+                  Complete Solar Power Solutions
+                </h1>
+
+                {/* Subheading */}
+                <p className="text-white/85 text-base md:text-lg mb-6 leading-relaxed max-w-2xl">
+                  We design, supply, install, and maintain reliable solar power solutions for homes, businesses, and commercial facilities.
+                </p>
+
+                {/* Highlight chips */}
+                <ul className="flex flex-wrap gap-2 mb-8" aria-label="Service highlights">
+                  {HERO_HIGHLIGHTS.map((highlight) => (
+                    <li
+                      key={highlight}
+                      className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1 text-white text-xs font-semibold"
+                    >
+                      <CheckCircle className="h-3 w-3 text-accent flex-shrink-0" aria-hidden="true" />
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button variant="accent" size="lg" asChild>
+                    <Link
+                      href="/products/solar"
+                      id="solar-hero-cta-primary"
+                      aria-label="Explore solar products"
+                    >
+                      Explore Solar Products
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="lg" asChild>
+                    <a
+                      href={`https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessages.solarEnquiry)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      id="solar-hero-cta-secondary"
+                      aria-label="Get a free solar consultation on WhatsApp"
+                      className="!text-white !border-white/50 hover:!bg-white/10"
+                    >
+                      <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                      Get a Free Consultation
+                    </a>
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </section>

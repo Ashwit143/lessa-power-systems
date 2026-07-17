@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Suspense } from "react";
-import { Sun, Battery, Zap, Package, ShieldCheck, MapPin, MessageCircle, ArrowRight, Star } from "lucide-react";
+import { ShieldCheck, MapPin, MessageCircle, ArrowRight, Star, Headphones, Zap } from "lucide-react";
 import { TrustBar } from "@/components/common/TrustBar";
 import { HeroBannerCarousel } from "@/features/products/HeroBannerCarousel";
 import { ProductCard, ProductCardSkeleton } from "@/features/products/ProductCard";
@@ -11,7 +11,6 @@ import { getActiveBanners } from "@/services/banner.service";
 import { getFeaturedProducts } from "@/services/product.service";
 import { SITE_CONFIG } from "@/lib/config";
 import { CATEGORIES } from "@/data/categories";
-import { cn } from "@/utils/cn";
 
 // ---------------------------------------------------------------------------
 // Metadata
@@ -78,16 +77,6 @@ function LocalBusinessSchema() {
 }
 
 // ---------------------------------------------------------------------------
-// Category icons map
-// ---------------------------------------------------------------------------
-const CATEGORY_ICONS: Record<string, React.ElementType> = {
-  battery: Battery,
-  inverter: Zap,
-  solar: Sun,
-  combo: Package,
-};
-
-// ---------------------------------------------------------------------------
 // Why Choose Us section data
 // ---------------------------------------------------------------------------
 const WHY_CHOOSE_US = [
@@ -95,25 +84,25 @@ const WHY_CHOOSE_US = [
     icon: ShieldCheck,
     title: "Authorized Distributor",
     description:
-      "Official Luminous distributor since 2009. Every product is genuine, warranty-backed, and sourced directly through Luminous's official channel.",
+      "We are an official Luminous channel partner since 2009. Every product comes directly through Luminous's authorized supply chain — genuine, warranty-backed, and fully supported.",
   },
   {
     icon: Star,
     title: "Genuine Luminous Products",
     description:
-      "We stock only authentic Luminous inverters, batteries, and solar equipment. No grey-market products, no counterfeits — ever.",
+      "We stock only authentic Luminous inverters, batteries, and solar equipment. No grey-market products, no counterfeits. What you buy is exactly what Luminous manufactures.",
   },
   {
-    icon: MapPin,
-    title: "Local Hyderabad Service",
+    icon: Zap,
+    title: "Expert Guidance & Fast Installation",
     description:
-      "Installation, AMC, and after-service across Hyderabad and the twin cities. Real local support — not a call center.",
+      "Our technical team helps you choose the right capacity for your actual load — no overselling. Once ordered, our certified installers get your system up and running quickly.",
   },
   {
-    icon: MessageCircle,
-    title: "WhatsApp-First Ordering",
+    icon: Headphones,
+    title: "Reliable After-Sales Support",
     description:
-      "Add products to your cart and send your order directly on WhatsApp. Our team responds with pricing, availability, and delivery details.",
+      "Our relationship with customers doesn't end at the sale. We provide AMC, warranty service, and ongoing technical support so your power backup keeps working when you need it most.",
   },
 ];
 
@@ -156,33 +145,37 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {CATEGORIES.filter((c) => c.isActive).map((category) => {
-              const Icon = CATEGORY_ICONS[category.slug] ?? Zap;
-              return (
-                <Link
-                  key={category.id}
-                  href={`/products/${category.slug}`}
-                  className="group card-base card-hover p-6 flex flex-col items-center text-center gap-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
-                  aria-label={`Browse ${category.name}: ${category.valueProp}`}
-                >
-                  <div className="flex items-center justify-center w-14 h-14 bg-primary-50 rounded-xl group-hover:bg-primary-100 transition-colors">
-                    <Icon className="h-7 w-7 text-primary-700" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-neutral-800 group-hover:text-primary-700 transition-colors mb-1">
-                      {category.name}
-                    </h3>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                      {category.valueProp}
-                    </p>
-                  </div>
-                  <span className="text-xs font-semibold text-primary-700 group-hover:underline flex items-center gap-1 mt-auto">
-                    View Products
-                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  </span>
-                </Link>
-              );
-            })}
+            {CATEGORIES.filter((c) => c.isActive).map((category) => (
+              <Link
+                key={category.id}
+                href={`/products/${category.slug}`}
+                className="group card-base card-hover p-6 flex flex-col items-center text-center gap-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
+                aria-label={`Browse ${category.name}: ${category.valueProp}`}
+              >
+                {/* Category image — object-contain in fixed square, no cropping */}
+                <div className="relative w-20 h-20 bg-neutral-50 rounded-xl overflow-hidden flex-shrink-0 group-hover:bg-primary-50 transition-colors border border-neutral-100">
+                  <Image
+                    src={category.featuredImage}
+                    alt={category.name}
+                    fill
+                    sizes="80px"
+                    className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-bold text-neutral-800 group-hover:text-primary-700 transition-colors mb-1">
+                    {category.name}
+                  </h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed">
+                    {category.valueProp}
+                  </p>
+                </div>
+                <span className="text-xs font-semibold text-primary-700 group-hover:underline flex items-center gap-1 mt-auto">
+                  View Products
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -248,7 +241,7 @@ export default async function HomePage() {
           <div className="section-header">
             <span className="section-eyebrow">Why choose us</span>
             <h2 id="why-heading" className="text-page text-neutral-900">
-              Why Hyderabad Trusts Leesa Power Systems
+              Why Choose Leesa Power Systems
             </h2>
           </div>
 

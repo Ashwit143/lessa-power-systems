@@ -33,9 +33,9 @@ export function AboutGallery() {
     <section className="section-padding bg-white border-t border-neutral-200">
       <div className="container-site">
         <div className="max-w-3xl mb-12 text-center mx-auto">
-          <h2 className="text-3xl font-bold text-neutral-900 mb-4">Our Store</h2>
+          <h2 className="text-3xl font-bold text-neutral-900 mb-4">Achievements</h2>
           <p className="text-neutral-600">
-            Visit our authorized Luminous dealership in Hyderabad to explore our complete range of power solutions in person.
+            Over {new Date().getFullYear() - 2009}+ years, we&apos;ve grown from a local power backup shop to a trusted Luminous authorized partner — serving thousands of customers, completing hundreds of installations, and building long-term relationships across Hyderabad.
           </p>
         </div>
 
