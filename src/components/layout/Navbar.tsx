@@ -8,6 +8,7 @@ import { ShoppingCart, Menu, X, Phone } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { SITE_CONFIG } from "@/lib/config";
 import { useCart } from "@/features/cart/CartContext";
+import { TopContactBar } from "./TopContactBar";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -44,6 +45,7 @@ export function Navbar() {
         isScrolled ? "shadow-nav" : "border-b border-neutral-100"
       )}
     >
+      <TopContactBar />
       <div className="container-site">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -86,27 +88,6 @@ export function Navbar() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2">
-
-            {/* Phone numbers — visible on md and above */}
-            <div className="hidden md:flex items-center gap-3 mr-1" aria-label="Contact phone numbers">
-              <a
-                href={`tel:+91${SITE_CONFIG.phones[0]}`}
-                className="flex items-center gap-1.5 text-xs font-semibold text-primary-700 hover:text-primary-800 transition-colors group"
-                aria-label={`Call ${SITE_CONFIG.phones[0]}`}
-              >
-                <Phone className="h-3.5 w-3.5 group-hover:scale-110 transition-transform" aria-hidden="true" />
-                <span>{SITE_CONFIG.phones[0]}</span>
-              </a>
-              <span className="h-4 w-px bg-neutral-200" aria-hidden="true" />
-              <a
-                href={`tel:+91${SITE_CONFIG.phones[1]}`}
-                className="flex items-center gap-1.5 text-xs font-semibold text-primary-700 hover:text-primary-800 transition-colors group"
-                aria-label={`Call ${SITE_CONFIG.phones[1]}`}
-              >
-                <Phone className="h-3.5 w-3.5 group-hover:scale-110 transition-transform" aria-hidden="true" />
-                <span>{SITE_CONFIG.phones[1]}</span>
-              </a>
-            </div>
 
             {/* Cart */}
             <Link
