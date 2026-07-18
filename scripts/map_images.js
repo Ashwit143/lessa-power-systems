@@ -1,178 +1,214 @@
 const fs = require('fs');
 const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config({ path: '.env.local' });
 
-const ROOT_DIR = path.join(__dirname, '..');
-const INDEX_PATH = path.join(ROOT_DIR, 'scratch', 'extracted_pdf_images', 'index.json');
-const IMAGES_DIR = path.join(ROOT_DIR, 'scratch', 'extracted_pdf_images');
-const PUBLIC_PRODUCTS_DIR = path.join(ROOT_DIR, 'public', 'images', 'products');
-const SQL_PATH = path.join(ROOT_DIR, 'supabase', 'catalog_seed.sql');
-
-// Create public directory if not exists
-if (!fs.existsSync(PUBLIC_PRODUCTS_DIR)) {
-  fs.mkdirSync(PUBLIC_PRODUCTS_DIR, { recursive: true });
-}
-
-const indexData = JSON.parse(fs.readFileSync(INDEX_PATH, 'utf-8'));
-let sqlContent = fs.readFileSync(SQL_PATH, 'utf-8');
-
-// Parse products from SQL
-const products = [];
-const insertRegex = /INSERT INTO products \([^)]+\) VALUES \('([^']+)', '([^']+)', '([^']+)'(.*?)\);/g;
-
-let match;
-while ((match = insertRegex.exec(sqlContent)) !== null) {
-  const [fullMatch, id, slug, name, rest] = match;
+// ============================================================================
+// Advanced Normalization & Matching Engine
+// ============================================================================
+function normalizeAndExtract(str) {
+  if (!str) return { normalized: '', words: [], modelNumbers: [] };
+  let s = str.toLowerCase();
   
-  // Try to extract capacity/specs from rest
-  let specsText = "";
-  const specsMatch = rest.match(/, '(\[.*?\])'::jsonb, '\[\]'::jsonb/);
-  if (specsMatch) {
-     specsText = specsMatch[1];
+  if (s.endsWith('.webp')) {
+    s = s.slice(0, -5);
   }
 
-  products.push({
-    id,
-    slug,
-    name,
-    originalText: fullMatch,
-    nameNorm: name.toLowerCase().replace(/[^a-z0-9]/g, ' '),
-    specs: specsText.toLowerCase()
-  });
+  // Remove generic words
+  const wordsToRemove = [
+    'luminous', 'solar', 'battery', 'inverter', 'inveter', 'ups', 'series', 
+    'home', 'commercial', 'grid tie', 'off grid', 'hybrid', 'copy', 'pro', 'eco'
+  ];
+  for (const w of wordsToRemove) {
+    s = s.replace(new RegExp(`\\b${w}\\b`, 'g'), ' ');
+  }
+
+  // Extract potential model numbers/capacities (e.g., 2800, 5kw, 7.5kva, 1206nm, 1250+)
+  const modelRegex = /\d+(?:\.\d+)?(?:kw|kva|w|v|ah|nm|e|h|l|p|\+)?/g;
+  const rawModels = str.toLowerCase().match(modelRegex) || [];
+  const modelNumbers = [...new Set(rawModels)];
+
+  // Further normalize: remove all punctuation but keep alphanumeric and spaces
+  let cleanString = s.replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  let words = cleanString.split(' ').filter(w => w.length > 0);
+  
+  // Create a completely squashed string for exact matching
+  let squashed = cleanString.replace(/\s+/g, '');
+
+  return {
+    normalized: squashed, // e.g. "optimus2800"
+    words: words,         // e.g. ["optimus", "2800"]
+    modelNumbers: modelNumbers // e.g. ["2800+"] (from raw string)
+  };
 }
 
-console.log(`Parsed ${products.length} products from SQL.`);
-
-const mapped = [];
-const unmapped = [];
-const imageUsed = new Set();
-
-function normalize(str) {
-  return str.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+// Jaccard Index for words
+function getSimilarity(wordsA, wordsB) {
+  if (wordsA.length === 0 && wordsB.length === 0) return 1;
+  if (wordsA.length === 0 || wordsB.length === 0) return 0;
+  
+  const setA = new Set(wordsA);
+  const setB = new Set(wordsB);
+  
+  const intersection = new Set([...setA].filter(x => setB.has(x)));
+  const union = new Set([...setA, ...setB]);
+  
+  return intersection.size / union.size;
 }
 
-function calculateScore(product, image) {
+// Main scoring function
+function calculateConfidence(productInfo, imageInfo) {
   let score = 0;
-  const pName = product.nameNorm;
-  const pSlugParts = product.slug.split('-');
-  const iText = normalize(image.detected_text);
   
-  // Exact match of full name (without "Luminous" maybe)
-  const nameWithoutBrand = pName.replace('luminous', '').trim();
-  if (nameWithoutBrand && iText.includes(nameWithoutBrand)) {
-    score += 100;
+  // 1. Exact squashed match (highest confidence)
+  if (productInfo.normalized === imageInfo.normalized && productInfo.normalized.length > 0) {
+    return 100;
   }
   
-  // Check parts of slug
-  let partsMatched = 0;
-  for (const part of pSlugParts) {
-    if (part === 'luminous') continue;
-    if (iText.includes(part)) {
-      partsMatched++;
-      score += 20;
-    }
-  }
-  
-  // If all meaningful parts matched
-  const meaningfulParts = pSlugParts.filter(p => p !== 'luminous').length;
-  if (meaningfulParts > 0 && partsMatched === meaningfulParts) {
-    score += 50;
-  }
-  
-  // Specs / Capacity match
-  const specsMatches = [...product.specs.matchAll(/[0-9]+[k]?[vw]a?/g)];
-  for (const m of specsMatches) {
-    if (iText.includes(m[0])) {
-      score += 30;
-    }
+  // 2. Substring squashed match (e.g. filename is subset of slug)
+  if (productInfo.normalized.length > 4 && imageInfo.normalized.length > 4) {
+      if (productInfo.normalized.includes(imageInfo.normalized) || imageInfo.normalized.includes(productInfo.normalized)) {
+          score += 40;
+      }
   }
 
-  // Exact number match (like '1100' or '5.5')
-  const numbersInName = pName.match(/[0-9.]+/g);
-  if (numbersInName) {
-    for (const num of numbersInName) {
-      // Must match as an isolated word/number in text
-      const regex = new RegExp(`\\b${num}\\b`);
-      if (regex.test(iText)) {
-        score += 40;
+  // 3. Model number match
+  let sharedModels = 0;
+  for (const m of productInfo.modelNumbers) {
+    if (imageInfo.modelNumbers.includes(m)) sharedModels++;
+  }
+  if (productInfo.modelNumbers.length > 0 && sharedModels === productInfo.modelNumbers.length) {
+      score += 50; // All product model numbers exist in image
+  } else if (sharedModels > 0) {
+      score += 25; // At least one model number matches
+  }
+  
+  // 4. Word similarity (Jaccard)
+  const sim = getSimilarity(productInfo.words, imageInfo.words);
+  score += (sim * 30);
+  
+  return score;
+}
+
+// ============================================================================
+// Main Script
+// ============================================================================
+async function run() {
+  console.log("Starting Advanced Image Mapping Process...\n");
+  
+  const baseDir = path.join(process.cwd(), 'public', 'images', 'products');
+  const categories = ['inverters', 'batteries', 'solar']; 
+  const images = [];
+
+  // Read images
+  for (const cat of categories) {
+    const catPath = path.join(baseDir, cat);
+    if (fs.existsSync(catPath)) {
+      const files = fs.readdirSync(catPath).filter(f => f.endsWith('.webp'));
+      for (const file of files) {
+        images.push({
+          filename: file,
+          path: `/images/products/${cat}/${file}`,
+          category: cat,
+          info: normalizeAndExtract(file)
+        });
       }
     }
   }
 
-  return score;
-}
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const { data: products, error } = await supabase.from('products').select('id, name, slug, category, subcategory, featured_image, sku');
 
-// For each product, find the best matching image
-for (const product of products) {
-  let bestImage = null;
-  let bestScore = 0;
-  
-  for (const image of indexData) {
-    const score = calculateScore(product, image);
-    if (score > bestScore) {
-      bestScore = score;
-      bestImage = image;
+  if (error) {
+    console.error("Error fetching products:", error);
+    return;
+  }
+
+  let matchedCount = 0;
+  let alreadyCorrectCount = 0;
+  let unmatchedCount = 0;
+  const updates = [];
+  const reports = [];
+
+  for (const p of products) {
+    // Generate info from both name and slug
+    const nameInfo = normalizeAndExtract(p.name);
+    const slugInfo = normalizeAndExtract(p.slug);
+    
+    // Combine model numbers and words from both to maximize matching potential
+    const combinedInfo = {
+        normalized: nameInfo.normalized, // Favor name for exact match
+        words: [...new Set([...nameInfo.words, ...slugInfo.words])],
+        modelNumbers: [...new Set([...nameInfo.modelNumbers, ...slugInfo.modelNumbers])]
+    };
+
+    let bestCandidate = null;
+    let highestScore = 0;
+
+    // Filter images by the exact same category to avoid cross-category false positives
+    // Note: product category might be 'inverter' while image folder is 'inverters'
+    const categoryMapping = { 'inverter': 'inverters', 'battery': 'batteries', 'solar': 'solar' };
+    const expectedImageCategory = categoryMapping[p.category] || p.category;
+    
+    const candidateImages = images.filter(img => img.category === expectedImageCategory);
+
+    for (const img of candidateImages) {
+        let score = calculateConfidence(combinedInfo, img.info);
+        if (score > highestScore) {
+            highestScore = score;
+            bestCandidate = img;
+        }
+    }
+
+    // Threshold for acceptance
+    // A score >= 50 means we likely hit a model number match or very high word similarity
+    if (bestCandidate && highestScore >= 45) {
+      if (p.featured_image === bestCandidate.path) {
+        alreadyCorrectCount++;
+      } else {
+        updates.push({ id: p.id, featured_image: bestCandidate.path, name: p.name });
+        matchedCount++;
+      }
+    } else {
+      unmatchedCount++;
+      reports.push({
+          name: p.name,
+          slug: p.slug,
+          closestCandidate: bestCandidate ? bestCandidate.filename : 'None found in category',
+          score: highestScore
+      });
     }
   }
-  
-  if (bestImage && bestScore >= 70) {
-    mapped.push({
-      product,
-      image: bestImage,
-      score: bestScore
-    });
-    imageUsed.add(bestImage.filename);
-  } else {
-    unmapped.push({
-      product,
-      topScore: bestScore,
-      topImage: bestImage ? bestImage.filename : null
-    });
+
+  console.log(`================ SUMMARY ================`);
+  console.log(`Total products: ${products.length}`);
+  console.log(`Successfully mapped (needs update): ${matchedCount}`);
+  console.log(`Already correct: ${alreadyCorrectCount}`);
+  console.log(`Remaining unmatched: ${unmatchedCount}`);
+  console.log(`=========================================\n`);
+
+  if (reports.length > 0) {
+    console.log(`--- Unmatched Products Review ---`);
+    for (const r of reports) {
+      console.log(`[Score: ${r.score.toFixed(1)}] ${r.name} -> Closest: ${r.closestCandidate}`);
+    }
+    console.log(`---------------------------------\n`);
+  }
+
+  if (updates.length > 0) {
+    console.log(`Updating ${updates.length} records in Supabase...`);
+    let successCount = 0;
+    
+    for (const update of updates) {
+      const { error: updateError } = await supabase
+        .from('products')
+        .update({ featured_image: update.featured_image })
+        .eq('id', update.id);
+        
+      if (!updateError) successCount++;
+    }
+    console.log(`Successfully updated ${successCount}/${updates.length} records.\n`);
   }
 }
 
-console.log(`\n--- MAPPING REPORT ---`);
-console.log(`✅ Successfully matched: ${mapped.length}`);
-console.log(`❌ Unmatched / Low confidence: ${unmapped.length}`);
-
-// Apply mappings
-let updatedSql = sqlContent;
-let appliedCount = 0;
-
-for (const match of mapped) {
-  const { product, image } = match;
-  
-  // Copy image
-  const srcPath = path.join(IMAGES_DIR, image.filename);
-  const destPath = path.join(PUBLIC_PRODUCTS_DIR, `${product.slug}.webp`);
-  
-  if (fs.existsSync(srcPath)) {
-    fs.copyFileSync(srcPath, destPath);
-    
-    // Update SQL
-    // We need to replace the featured_image and gallery fields in the specific INSERT statement
-    // The original text looks like: ... '["tag"]'::jsonb, '/images/products/placeholder.png', '["/images/products/placeholder.png"]'::jsonb, ...
-    // Because the user previously used placeholder images, we should find the exact row.
-    
-    // We can do a string replace on the specific product's full match
-    const newImagePath = `/images/products/${product.slug}.webp`;
-    let newText = product.originalText;
-    
-    // Replace featured_image
-    newText = newText.replace(/, '\/images\/products\/[^']+', '\["\/images\/products\/[^"]+"\]'::jsonb,/, `, '${newImagePath}', '["${newImagePath}"]'::jsonb,`);
-    
-    // If the regex above didn't match (maybe it was .png or something), we can be more robust:
-    // It's usually `tags'::jsonb, 'featured_image', 'gallery'::jsonb`
-    newText = newText.replace(/(::jsonb, ')[^']+(', '\[")[^"]+("\]'::jsonb,)/, `$1${newImagePath}$2${newImagePath}$3`);
-    
-    updatedSql = updatedSql.replace(product.originalText, newText);
-    appliedCount++;
-  } else {
-    console.error(`Source image not found: ${srcPath}`);
-  }
-}
-
-fs.writeFileSync(SQL_PATH, updatedSql, 'utf-8');
-
-console.log(`\nApplied ${appliedCount} updates to catalog_seed.sql and copied images.`);
-console.log(`\nUnmapped Products (Need manual review):`);
-unmapped.forEach(u => console.log(`- ${u.product.name} (Top score: ${u.topScore})`));
+run();
