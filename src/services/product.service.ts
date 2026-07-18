@@ -139,7 +139,7 @@ async function listProductsFromSupabase(
   }
   if (filters.search) {
     query = query.or(
-      `name.ilike.%${filters.search}%,short_description.ilike.%${filters.search}%`
+      `name.ilike.%${filters.search}%,short_description.ilike.%${filters.search}%,category.ilike.%${filters.search}%,sku.ilike.%${filters.search}%`
     );
   }
 
@@ -225,11 +225,11 @@ async function getRelatedFromSupabase(
 async function searchFromSupabase(query: string): Promise<Product[]> {
   const { data, error } = await staticSupabase
     .from("products")
-    .select("id, name, slug, category, short_description, featured_image, specs, featured, status, is_active")
-    .or(`name.ilike.%${query}%,short_description.ilike.%${query}%`)
+    .select("id, name, slug, category, short_description, featured_image, specs, featured, status, is_active, sku")
+    .or(`name.ilike.%${query}%,short_description.ilike.%${query}%,category.ilike.%${query}%,sku.ilike.%${query}%`)
     .eq("is_active", true)
     .eq("status", "published")
-    .limit(20);
+    .limit(6);
 
   if (error) return [];
   return (data?.map(mapProduct) as Product[]) ?? [];

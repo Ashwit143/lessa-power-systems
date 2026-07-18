@@ -9,10 +9,12 @@ import { cn } from "@/utils/cn";
 import { SITE_CONFIG } from "@/lib/config";
 import { useCart } from "@/features/cart/CartContext";
 import { TopContactBar } from "./TopContactBar";
+import { NavbarSearch } from "./NavbarSearch";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
+  { href: "/best-sellers", label: "Best Sellers" },
   { href: "/products/battery", label: "Batteries" },
   { href: "/products/inverter", label: "Inverters" },
   { href: "/solar", label: "Solar" },
@@ -41,64 +43,73 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full bg-white transition-shadow duration-200",
-        isScrolled ? "shadow-nav" : "border-b border-neutral-100"
+        "sticky top-0 z-40 w-full transition-all duration-300",
+        isScrolled ? "bg-white/90 backdrop-blur-md shadow-lg" : "bg-white border-b border-neutral-100"
       )}
     >
       <TopContactBar />
       <div className="container-site">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center h-[68px] gap-4 xl:gap-8 w-full">
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 rounded-md py-1"
+            className="flex items-center flex-shrink-0 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 rounded-md py-1"
             aria-label="Leesa Power Systems — Home"
           >
             <Image
               src="/banners/logo.png"
               alt="Leesa Power Systems"
-              width={250}
-              height={60}
-              className="h-10 sm:h-12 w-auto object-contain"
+              width={275}
+              height={66}
+              className="h-11 sm:h-[52px] w-auto object-contain transition-transform"
               priority
             />
           </Link>
 
           {/* Desktop Navigation */}
           <nav
-            className="hidden lg:flex items-center gap-1"
+            className="hidden xl:flex items-center gap-1 2xl:gap-2 flex-1 justify-start"
             aria-label="Main navigation"
           >
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "nav-link px-3 py-2 rounded-md text-sm",
-                  pathname === link.href || pathname.startsWith(link.href + "/")
-                    ? "nav-link-active bg-primary-50"
-                    : ""
-                )}
-                aria-current={pathname === link.href ? "page" : undefined}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"));
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "relative px-3 py-2 text-[15px] font-semibold transition-colors duration-200 group whitespace-nowrap",
+                    isActive ? "text-primary-700" : "text-neutral-600 hover:text-primary-700"
+                  )}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {link.label}
+                  <span className={cn(
+                    "absolute left-3 right-3 -bottom-1 h-0.5 bg-primary-600 rounded-full transition-all duration-300 ease-out",
+                    isActive ? "opacity-100 scale-100" : "opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100"
+                  )} />
+                </Link>
+              )
+            })}
           </nav>
 
           {/* Right actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3 xl:gap-4 ml-auto flex-shrink-0">
+            {/* Search - Desktop */}
+            <div className="hidden lg:block w-[260px] xl:w-[300px]">
+              <NavbarSearch />
+            </div>
 
             {/* Cart */}
             <Link
               href="/cart"
-              className="relative flex items-center justify-center w-10 h-10 rounded-md text-neutral-700 hover:bg-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
+              className="relative flex items-center justify-center w-10 h-10 rounded-full text-neutral-700 hover:bg-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
               aria-label={`Cart${itemCount > 0 ? `, ${itemCount} item${itemCount !== 1 ? "s" : ""}` : ""}`}
             >
-              <ShoppingCart className="h-5 w-5" aria-hidden="true" />
+              <ShoppingCart className="h-[22px] w-[22px]" aria-hidden="true" />
               {itemCount > 0 && (
                 <span
-                  className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-accent text-white text-xs font-bold rounded-full flex items-center justify-center px-1"
+                  className="absolute -top-1 -right-1 min-w-[20px] h-[20px] bg-accent text-white text-[11px] font-bold rounded-full flex items-center justify-center px-1 border-2 border-white"
                   aria-hidden="true"
                 >
                   {itemCount > 99 ? "99+" : itemCount}
@@ -108,16 +119,16 @@ export function Navbar() {
 
             {/* Mobile menu toggle */}
             <button
-              className="lg:hidden flex items-center justify-center w-10 h-10 rounded-md text-neutral-700 hover:bg-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
+              className="xl:hidden flex items-center justify-center w-10 h-10 rounded-full text-neutral-700 hover:bg-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMenuOpen ? (
-                <X className="h-5 w-5" aria-hidden="true" />
+                <X className="h-6 w-6" aria-hidden="true" />
               ) : (
-                <Menu className="h-5 w-5" aria-hidden="true" />
+                <Menu className="h-6 w-6" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -128,49 +139,33 @@ export function Navbar() {
       {isMenuOpen && (
         <div
           id="mobile-menu"
-          className="lg:hidden border-t border-neutral-100 bg-white animate-slide-up"
+          className="xl:hidden border-t border-neutral-100 bg-white/95 backdrop-blur-md shadow-lg animate-slide-up"
         >
+          <div className="container-site pt-4 pb-2">
+            <NavbarSearch />
+          </div>
           <nav
-            className="container-site py-4 flex flex-col gap-1"
+            className="container-site py-2 flex flex-col gap-1 pb-4"
             aria-label="Mobile navigation"
           >
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "px-4 py-3 rounded-md text-sm font-semibold transition-colors",
-                  pathname === link.href || pathname.startsWith(link.href + "/")
-                    ? "bg-primary-50 text-primary-700"
-                    : "text-neutral-700 hover:bg-neutral-50"
-                )}
-                aria-current={pathname === link.href ? "page" : undefined}
-              >
-                {link.label}
-              </Link>
-            ))}
-
-            {/* Mobile contact numbers — shown only below md (md+ uses navbar inline) */}
-            <div className="md:hidden mt-3 pt-3 border-t border-neutral-100" aria-label="Contact phone numbers">
-              <p className="px-4 pb-2 text-xs font-bold text-neutral-400 uppercase tracking-wider">Call Us</p>
-              <a
-                href={`tel:+91${SITE_CONFIG.phones[0]}`}
-                className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-primary-700 hover:bg-primary-50 transition-colors"
-                aria-label={`Call ${SITE_CONFIG.phones[0]}`}
-              >
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                📞 {SITE_CONFIG.phones[0]}
-              </a>
-              <a
-                href={`tel:+91${SITE_CONFIG.phones[1]}`}
-                className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-primary-700 hover:bg-primary-50 transition-colors"
-                aria-label={`Call ${SITE_CONFIG.phones[1]}`}
-              >
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                📞 {SITE_CONFIG.phones[1]}
-              </a>
-            </div>
-
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"));
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "px-4 py-3 rounded-md text-[15px] font-semibold transition-colors",
+                    isActive
+                      ? "bg-primary-50 text-primary-700"
+                      : "text-neutral-700 hover:bg-neutral-50"
+                  )}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
           </nav>
         </div>
       )}

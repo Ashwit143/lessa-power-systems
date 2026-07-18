@@ -44,7 +44,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="card-base group flex flex-col h-full"
+      className="card-base group flex flex-col h-full bg-[#F5F7FA] hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300"
       aria-label={product.name}
     >
       {/* Product image */}
@@ -54,7 +54,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         tabIndex={0}
         aria-label={`View ${product.name} details`}
       >
-        <div className="product-image-container group-hover:bg-neutral-100 transition-colors">
+        <div className="product-image-container transition-colors">
           <ProductImage
             src={product.featuredImage}
             alt={product.altText ?? product.name}
@@ -115,12 +115,13 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col gap-2 mt-auto pt-2 border-t border-neutral-100">
+        <div className="flex flex-col gap-2 mt-auto pt-4 border-t border-neutral-200">
 
           <Button
-            variant={alreadyInCart ? "outline" : "ghost"}
-            size="sm"
+            variant={alreadyInCart ? "outline" : "primary"}
+            size="md"
             fullWidth
+            className="font-bold shadow-sm"
             leftIcon={<ShoppingCart className="h-4 w-4" aria-hidden="true" />}
             onClick={handleAddToCart}
             id={`add-to-cart-${product.id}`}
