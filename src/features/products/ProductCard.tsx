@@ -7,7 +7,6 @@ import { cn } from "@/utils/cn";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/index";
 import { useCart } from "@/features/cart/CartContext";
-import { getSingleProductWhatsAppUrl, openWhatsApp } from "@/utils/whatsapp";
 import { analytics } from "@/lib/analytics";
 import { ProductImage } from "@/components/ui/ProductImage";
 import type { Product } from "@/types";

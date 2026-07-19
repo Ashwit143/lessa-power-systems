@@ -1,4 +1,4 @@
-import { Package, MessageSquare, Image as ImageIcon, Tags, ArrowRight } from "lucide-react";
+import { Package, ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
 import { getAdminStats } from "@/services/admin.service";
 
@@ -13,30 +13,6 @@ export default async function AdminDashboardPage() {
       icon: Package,
       color: "bg-blue-50 text-blue-700",
       href: "/admin/products"
-    },
-    {
-      title: "New Leads",
-      value: stats.newLeads,
-      subtitle: `${stats.totalLeads} total inquiries`,
-      icon: MessageSquare,
-      color: "bg-amber-50 text-amber-700",
-      href: "/admin/leads"
-    },
-    {
-      title: "Active Banners",
-      value: stats.activeBanners,
-      subtitle: `Out of ${stats.totalBanners} total banners`,
-      icon: ImageIcon,
-      color: "bg-emerald-50 text-emerald-700",
-      href: "/admin/banners"
-    },
-    {
-      title: "Categories",
-      value: stats.categories,
-      subtitle: "Active product categories",
-      icon: Tags,
-      color: "bg-purple-50 text-purple-700",
-      href: "/admin/settings"
     }
   ];
 
@@ -45,14 +21,20 @@ export default async function AdminDashboardPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-neutral-900">Dashboard Overview</h1>
-          <p className="text-neutral-500 mt-1">Welcome back. Here's what's happening today.</p>
+          <p className="text-neutral-500 mt-1">Welcome back. Manage your product catalog here.</p>
         </div>
         <div className="flex gap-3">
           <Link 
-            href="/admin/products/new" 
-            className="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-primary-700 rounded-md hover:bg-primary-800 transition-colors"
+            href="/admin/products" 
+            className="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-neutral-700 bg-white border border-neutral-300 rounded-md hover:bg-neutral-50 transition-colors"
           >
-            Add Product
+            View Products
+          </Link>
+          <Link 
+            href="/admin/products/add" 
+            className="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-primary-700 rounded-md hover:bg-primary-800 transition-colors gap-2"
+          >
+            <Plus className="h-4 w-4" /> Add Product
           </Link>
         </div>
       </div>
@@ -83,16 +65,6 @@ export default async function AdminDashboardPage() {
             </div>
           );
         })}
-      </div>
-
-      {/* Recent Activity Placeholder */}
-      <div className="bg-white rounded-xl border border-neutral-200 shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-neutral-200 flex justify-between items-center">
-          <h2 className="text-lg font-bold text-neutral-900">Recent Activity</h2>
-        </div>
-        <div className="p-12 text-center text-neutral-500">
-          <p>Activity logging will be available when database is connected.</p>
-        </div>
       </div>
     </div>
   );

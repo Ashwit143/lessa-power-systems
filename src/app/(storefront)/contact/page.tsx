@@ -3,6 +3,7 @@ import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config";
 import { ContactForm } from "@/features/contact/ContactForm";
 import { BusinessStatusBadge } from "@/features/contact/BusinessStatusBadge";
+import { getSiteSettings } from "@/services/settings.service";
 
 export const metadata: Metadata = {
   title: `Contact Us — ${SITE_CONFIG.businessName}`,
@@ -10,7 +11,12 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_CONFIG.siteUrl}/contact` },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+  const addressLines = settings.address.split(',').map(s => s.trim());
+  const primaryPhone = settings.primaryPhone;
+  const phones = [primaryPhone];
+
   return (
     <div className="min-h-screen bg-neutral-50 pb-16">
       {/* Page Header */}
@@ -42,14 +48,12 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-neutral-900 mb-1">Our Store</h3>
-                    <address className="not-italic text-neutral-600 text-sm leading-relaxed">
-                      {SITE_CONFIG.address.line1}<br />
-                      {SITE_CONFIG.address.line2}<br />
-                      {SITE_CONFIG.address.city}, {SITE_CONFIG.address.state} {SITE_CONFIG.address.pincode}
+                    <address className="not-italic text-neutral-600 text-sm leading-relaxed whitespace-pre-wrap">
+                      {settings.address}
                     </address>
-                    {SITE_CONFIG.googleMapsUrl && (
+                    {settings.googleMapsLink && (
                       <a 
-                        href={SITE_CONFIG.googleMapsUrl}
+                        href={settings.googleMapsLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-block mt-2 text-sm font-semibold text-primary-700 hover:text-primary-800"
@@ -68,7 +72,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-neutral-900 mb-1">Phone & WhatsApp</h3>
                     <div className="space-y-1">
-                      {SITE_CONFIG.phones.map((phone) => (
+                      {phones.map((phone) => (
                         <div key={phone}>
                           <a 
                             href={`tel:+91${phone}`}
@@ -90,10 +94,10 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-neutral-900 mb-1">Email</h3>
                     <a 
-                      href={`mailto:${SITE_CONFIG.email}`}
+                      href={`mailto:${settings.email}`}
                       className="text-neutral-600 text-sm hover:text-primary-700 transition-colors"
                     >
-                      {SITE_CONFIG.email}
+                      {settings.email}
                     </a>
                   </div>
                 </div>
@@ -124,7 +128,7 @@ export default function ContactPage() {
             </div>
             
             {/* Embedded Map */}
-            {SITE_CONFIG.googleMapsEmbedUrl && (
+            {settings.googleMapsLink && (
               <div className="rounded-xl overflow-hidden border border-neutral-200 h-64 bg-neutral-200">
                 <iframe 
                   src={SITE_CONFIG.googleMapsEmbedUrl} 
@@ -134,7 +138,7 @@ export default function ContactPage() {
                   allowFullScreen 
                   loading="lazy" 
                   referrerPolicy="no-referrer-when-downgrade"
-                  title={`Map showing location of ${SITE_CONFIG.businessName}`}
+                  title={`Map showing location of ${settings.companyName}`}
                 ></iframe>
               </div>
             )}

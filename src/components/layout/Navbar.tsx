@@ -10,6 +10,7 @@ import { SITE_CONFIG } from "@/lib/config";
 import { useCart } from "@/features/cart/CartContext";
 import { TopContactBar } from "./TopContactBar";
 import { NavbarSearch } from "./NavbarSearch";
+import type { AppSettings } from "@/services/settings.service";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -22,7 +23,11 @@ const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  settings?: AppSettings;
+}
+
+export function Navbar({ settings }: NavbarProps) {
   const pathname = usePathname();
   const { itemCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,7 +52,7 @@ export function Navbar() {
         isScrolled ? "bg-white/90 backdrop-blur-md shadow-lg" : "bg-white border-b border-neutral-100"
       )}
     >
-      <TopContactBar />
+      <TopContactBar settings={settings} />
       <div className="container-site">
         <div className="flex items-center h-[68px] gap-4 xl:gap-8 w-full">
           {/* Logo */}

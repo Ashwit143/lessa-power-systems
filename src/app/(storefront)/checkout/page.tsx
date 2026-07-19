@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CheckoutForm } from "@/features/cart/CheckoutForm";
 import { SITE_CONFIG } from "@/lib/config";
 import { Breadcrumb } from "@/components/ui/forms";
+import { getSiteSettings } from "@/services/settings.service";
 
 export const metadata: Metadata = {
   title: `Checkout — ${SITE_CONFIG.businessName}`,
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function CheckoutPage() {
+export default async function CheckoutPage() {
+  const settings = await getSiteSettings();
+
   return (
     <div className="section-padding min-h-screen bg-neutral-50">
       <div className="container-site max-w-3xl">
@@ -25,7 +28,7 @@ export default function CheckoutPage() {
           <h1 className="text-2xl font-bold text-neutral-900 mb-6 border-b border-neutral-100 pb-4">
             Shipping Details
           </h1>
-          <CheckoutForm />
+          <CheckoutForm settings={settings} />
         </div>
       </div>
     </div>

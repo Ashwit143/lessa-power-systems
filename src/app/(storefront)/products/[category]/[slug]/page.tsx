@@ -6,6 +6,8 @@ import { ProductCard } from "@/features/products/ProductCard";
 import { ProductDetailClient } from "./ProductDetailClient";
 import { getProductBySlug, getRelatedProducts, getAllProductSlugs } from "@/services/product.service";
 import { SITE_CONFIG } from "@/lib/config";
+import { getSiteSettings } from "@/services/settings.service";
+import { normalizeWhatsAppNumber } from "@/utils/whatsapp";
 import type { ProductCategory } from "@/types";
 
 interface Props {
@@ -47,7 +49,11 @@ export default async function ProductDetailPage({ params }: Props) {
   const product = await getProductBySlug(slug);
   if (!product || product.category !== category) notFound();
 
-  const relatedProducts = await getRelatedProducts(product.id, product.category as ProductCategory, 4);
+  const [relatedProducts, settings] = await Promise.all([
+    getRelatedProducts(product.id, product.category as ProductCategory, 4),
+    getSiteSettings()
+  ]);
+  const whatsappNumber = normalizeWhatsAppNumber(settings.whatsappNumber || SITE_CONFIG.whatsappNumber);
 
   const breadcrumbs = [
     { label: "Home", href: "/" },
@@ -113,7 +119,7 @@ export default async function ProductDetailPage({ params }: Props) {
             View Cart
           </Link>
           <a
-            href={`https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}. Please share pricing and availability.`)}`}
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}. Please share pricing and availability.`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 py-3 text-sm font-semibold text-center text-white bg-whatsapp rounded-md hover:opacity-90 transition-opacity"

@@ -3,8 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { LogIn, Zap } from "lucide-react";
+import { LogIn } from "lucide-react";
 import Image from "next/image";
 import { AdminLoginSchema, type AdminLoginInput } from "@/schemas";
 import { Input } from "@/components/ui/forms";
@@ -12,9 +11,10 @@ import { Button } from "@/components/ui/Button";
 import { SITE_CONFIG } from "@/lib/config";
 import { toast } from "sonner";
 
+import { login } from "./actions";
+
 export default function AdminLoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
 
   const {
     register,
@@ -28,14 +28,19 @@ export default function AdminLoginPage() {
     setIsSubmitting(true);
     
     try {
-      // In a real app, we would authenticate with Supabase here
-      // For demo mode, we just redirect to the dashboard
-      setTimeout(() => {
-        toast.success("Login successful (Demo Mode)");
-        router.push("/admin");
-      }, 800);
-    } catch (error) {
-      toast.error("Invalid credentials");
+      const formData = new FormData();
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      
+      const result = await login(formData);
+      
+      if (result?.error) {
+        toast.error(result.error);
+        setIsSubmitting(false);
+      }
+      // If successful, the action will redirect, so no need for toast here
+    } catch {
+      toast.error("An unexpected error occurred.");
       setIsSubmitting(false);
     }
   };
@@ -112,10 +117,6 @@ export default function AdminLoginPage() {
               >
                 Sign in
               </Button>
-            </div>
-            
-            <div className="mt-4 p-4 bg-amber-50 rounded-lg text-sm text-amber-800 text-center border border-amber-200">
-              <strong>Demo Mode:</strong> Any email and password will work. Authentication is bypassed since database is disconnected.
             </div>
           </form>
         </div>

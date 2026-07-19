@@ -15,12 +15,11 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { SITE_CONFIG } from "@/lib/config";
+import { logout } from "@/app/admin/login/actions";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Products", href: "/admin/products", icon: Package },
-  { label: "Banners", href: "/admin/banners", icon: ImageIcon },
-  { label: "Leads", href: "/admin/leads", icon: MessageSquare },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
@@ -99,12 +98,15 @@ export function AdminSidebar() {
         </div>
 
         <div className="p-4 border-t border-neutral-200 shrink-0">
-          <button
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-error hover:bg-red-50 w-full transition-colors"
-          >
-            <LogOut className="h-5 w-5" aria-hidden="true" />
-            Sign Out
-          </button>
+          <form action={logout}>
+            <button
+              type="submit"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-error hover:bg-red-50 w-full transition-colors"
+            >
+              <LogOut className="h-5 w-5" aria-hidden="true" />
+              Sign Out
+            </button>
+          </form>
         </div>
       </aside>
     </>

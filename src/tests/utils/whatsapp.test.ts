@@ -10,13 +10,13 @@ import type { CartItem } from "@/types";
 describe("WhatsApp utilities", () => {
   describe("buildWhatsAppUrl", () => {
     it("builds a valid wa.me URL", () => {
-      const url = buildWhatsAppUrl("Hello there", "917702778412");
-      expect(url).toContain("https://wa.me/917702778412");
+      const url = buildWhatsAppUrl("Hello there", "918121515858");
+      expect(url).toContain("https://wa.me/918121515858");
       expect(url).toContain("text=");
     });
 
     it("URL-encodes the message", () => {
-      const url = buildWhatsAppUrl("Hello & Goodbye", "917702778412");
+      const url = buildWhatsAppUrl("Hello & Goodbye", "918121515858");
       expect(url).toContain(encodeURIComponent("Hello & Goodbye"));
     });
   });

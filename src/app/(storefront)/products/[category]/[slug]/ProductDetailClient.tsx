@@ -6,7 +6,6 @@ import { ProductImage } from "@/components/ui/ProductImage";
 import { useCart } from "@/features/cart/CartContext";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/index";
-import { getSingleProductWhatsAppUrl, openWhatsApp } from "@/utils/whatsapp";
 import { analytics } from "@/lib/analytics";
 import { getProductImage } from "@/utils/image";
 import type { Product } from "@/types";

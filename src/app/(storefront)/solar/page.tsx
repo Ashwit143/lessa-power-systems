@@ -5,6 +5,8 @@ import { SolarSystemCards } from "@/features/solar/SolarSystemCards";
 import { Accordion } from "@/components/ui/forms";
 import { Button } from "@/components/ui/Button";
 import { SITE_CONFIG } from "@/lib/config";
+import { getSiteSettings } from "@/services/settings.service";
+import { normalizeWhatsAppNumber } from "@/utils/whatsapp";
 import { FAQS, getFAQsByCategory } from "@/data/faqs";
 import { MessageCircle, Sun, CheckCircle, Star, MapPin, Award, Calendar } from "lucide-react";
 
@@ -62,7 +64,10 @@ const PROCESS_STEPS = [
 
 const solarFaqs = getFAQsByCategory("solar");
 
-export default function SolarPage() {
+export default async function SolarPage() {
+  const settings = await getSiteSettings();
+  const whatsappNumber = normalizeWhatsAppNumber(settings.whatsappNumber || SITE_CONFIG.whatsappNumber);
+
   return (
     <>
       <main id="main-content">
@@ -81,97 +86,97 @@ export default function SolarPage() {
           ================================================================
         */}
         <section
-          className="relative w-full overflow-hidden flex flex-col justify-end min-h-[473px] md:min-h-[492px]"
+          className="relative w-full aspect-[525/473] md:aspect-[1600/492] overflow-hidden"
           aria-labelledby="solar-hero-heading"
         >
           {/* ── Responsive banner image (picture + img, Luminous-style) ── */}
-          <div className="absolute inset-0 -z-20">
-            <picture>
-              {/* Mobile source — loaded only below 768 px */}
-              <source
-                srcSet="/banners/solar-mobile.webp"
-                media="(max-width: 767px)"
-                type="image/webp"
-              />
-              {/* Default / desktop source */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/banners/solar-desktop.webp"
-                alt="Solar panels installation — Leesa Power Systems"
-                decoding="async"
-                fetchPriority="high"
-                loading="eager"
-                className="w-full h-full object-cover object-center"
-              />
-            </picture>
-          </div>
+          <picture>
+            {/* Mobile source — loaded only below 768 px */}
+            <source
+              srcSet="/banners/solar-mobile.webp"
+              media="(max-width: 767px)"
+              type="image/webp"
+            />
+            {/* Default / desktop source */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/banners/solar-desktop.webp"
+              alt="Solar panels installation — Leesa Power Systems"
+              decoding="async"
+              fetchPriority="high"
+              loading="eager"
+              className="absolute inset-0 w-full h-full object-cover object-center -z-20"
+            />
+          </picture>
 
           {/* ── Dark gradient overlay for text readability ───────────── */}
           <div
-            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent -z-10"
+            className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/80 md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent -z-10"
             aria-hidden="true"
           />
 
           {/* ── Hero content — layered above the banner ───────────────── */}
-          <div className="container-site w-full relative z-10 pb-8 md:py-16 mt-auto md:mt-0 flex flex-col md:justify-center h-full">
-            <div className="max-w-2xl mt-auto md:mt-0">
-              {/* Eyebrow */}
-              <div className="flex items-center gap-2 mb-3 md:mb-4">
-                <Sun className="h-5 w-5 text-accent" aria-hidden="true" />
-                <span className="text-accent text-xs font-bold uppercase tracking-widest drop-shadow-md">
-                  Solar Solutions — Hyderabad
-                </span>
-              </div>
+          <div className="absolute inset-0 flex flex-col justify-center md:justify-center py-6 md:py-10">
+            <div className="container-site w-full h-full flex flex-col justify-center mt-4 md:mt-0">
+              <div className="max-w-2xl">
+                {/* Eyebrow */}
+                <div className="flex items-center gap-2 mb-2 md:mb-4">
+                  <Sun className="h-5 w-5 text-accent" aria-hidden="true" />
+                  <span className="text-accent text-[11px] md:text-xs font-bold uppercase tracking-widest drop-shadow-md">
+                    Solar Solutions — Hyderabad
+                  </span>
+                </div>
 
-              {/* Heading */}
-              <h1
-                id="solar-hero-heading"
-                className="text-3xl md:text-5xl lg:text-hero font-extrabold text-white mb-3 md:mb-4 text-balance drop-shadow-md"
-              >
-                Complete Solar Power Solutions
-              </h1>
+                {/* Heading */}
+                <h1
+                  id="solar-hero-heading"
+                  className="text-3xl md:text-5xl lg:text-hero font-extrabold text-white mb-2 md:mb-4 text-balance drop-shadow-md leading-tight"
+                >
+                  Complete Solar Power Solutions
+                </h1>
 
-              {/* Subheading */}
-              <p className="hidden sm:block text-white/90 text-sm md:text-lg mb-5 md:mb-6 leading-relaxed drop-shadow-md">
-                We design, supply, install, and maintain reliable solar power solutions for homes, businesses, and commercial facilities.
-              </p>
+                {/* Subheading */}
+                <p className="hidden sm:block text-white/90 text-sm md:text-lg mb-4 md:mb-6 leading-relaxed drop-shadow-md">
+                  We design, supply, install, and maintain reliable solar power solutions for homes, businesses, and commercial facilities.
+                </p>
 
-              {/* Highlight chips */}
-              <ul className="hidden sm:flex flex-wrap gap-1.5 md:gap-2 mb-5 md:mb-8" aria-label="Service highlights">
-                {HERO_HIGHLIGHTS.map((highlight) => (
-                  <li
-                    key={highlight}
-                    className="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full px-2.5 md:px-3 py-1 text-white text-[10px] md:text-xs font-semibold"
-                  >
-                    <CheckCircle className="h-3 w-3 text-accent flex-shrink-0" aria-hidden="true" />
-                    {highlight}
-                  </li>
-                ))}
-              </ul>
+                {/* Highlight chips */}
+                <ul className="hidden sm:flex flex-wrap gap-1.5 md:gap-2 mb-5 md:mb-8" aria-label="Service highlights">
+                  {HERO_HIGHLIGHTS.map((highlight) => (
+                    <li
+                      key={highlight}
+                      className="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm border border-white/20 rounded-full px-2.5 md:px-3 py-1 text-white text-[10px] md:text-xs font-semibold"
+                    >
+                      <CheckCircle className="h-3 w-3 text-accent flex-shrink-0" aria-hidden="true" />
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
 
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-                <Button variant="accent" size="lg" className="w-full sm:w-auto" asChild>
-                  <Link
-                    href="/products/solar"
-                    id="solar-hero-cta-primary"
-                    aria-label="Explore solar products"
-                  >
-                    Explore Solar Products
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" className="w-full sm:w-auto !text-white !border-white/50 hover:!bg-white/10" asChild>
-                  <a
-                    href={`https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessages.solarEnquiry)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    id="solar-hero-cta-secondary"
-                    aria-label="Get a free solar consultation on WhatsApp"
-                  >
-                    <MessageCircle className="h-4 w-4" aria-hidden="true" />
-                    Get a Free Consultation
-                  </a>
-                </Button>
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-3 mt-2 sm:mt-0">
+                  <Button variant="accent" size="lg" className="w-full sm:w-auto text-sm md:text-base py-2.5 md:py-3 h-auto" asChild>
+                    <Link
+                      href="/products/solar"
+                      id="solar-hero-cta-primary"
+                      aria-label="Explore solar products"
+                    >
+                      Explore Solar Products
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto text-sm md:text-base py-2.5 md:py-3 h-auto !text-white !border-white/50 hover:!bg-white/10" asChild>
+                    <a
+                      href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessages.solarEnquiry)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      id="solar-hero-cta-secondary"
+                      aria-label="Get a free solar consultation on WhatsApp"
+                    >
+                      <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                      Get a Free Consultation
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -252,7 +257,7 @@ export default function SolarPage() {
             <div className="mt-12 text-center">
               <Button variant="accent" size="lg" asChild>
                 <a
-                  href={`https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessages.solarEnquiry)}`}
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessages.solarEnquiry)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Start solar consultation on WhatsApp"

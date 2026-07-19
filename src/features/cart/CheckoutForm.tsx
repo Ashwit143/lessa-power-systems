@@ -12,6 +12,7 @@ import { useCart } from "@/features/cart/CartContext";
 import { getCartWhatsAppUrl, openWhatsApp, CheckoutData } from "@/utils/whatsapp";
 import { MessageCircle } from "lucide-react";
 import { analytics } from "@/lib/analytics";
+import type { AppSettings } from "@/services/settings.service";
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -19,7 +20,11 @@ const checkoutSchema = z.object({
   address: z.string().min(10, "Please provide a complete address"),
 });
 
-export function CheckoutForm() {
+interface CheckoutFormProps {
+  settings?: AppSettings;
+}
+
+export function CheckoutForm({ settings }: CheckoutFormProps) {
   const { items, clearCart } = useCart();
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
@@ -67,7 +72,7 @@ export function CheckoutForm() {
     localStorage.setItem("leesa_checkout_details", JSON.stringify(data));
     
     // Generate URL and open WhatsApp
-    const url = getCartWhatsAppUrl(items, data);
+    const url = getCartWhatsAppUrl(items, data, settings);
     analytics.whatsAppClicked("checkout_form");
     
     const success = openWhatsApp(url);

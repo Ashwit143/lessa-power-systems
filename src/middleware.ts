@@ -38,12 +38,21 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Protect admin routes
-  if (request.nextUrl.pathname.startsWith("/admin") && !request.nextUrl.pathname.startsWith("/admin/login")) {
-    if (!user) {
-      // no user, potentially respond by redirecting the user to the login page
-      const url = request.nextUrl.clone();
-      url.pathname = "/admin/login";
-      return NextResponse.redirect(url);
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    if (request.nextUrl.pathname === "/admin/login") {
+      if (user) {
+        // user is already logged in, redirect to dashboard
+        const url = request.nextUrl.clone();
+        url.pathname = "/admin";
+        return NextResponse.redirect(url);
+      }
+    } else {
+      if (!user) {
+        // no user, redirect to login
+        const url = request.nextUrl.clone();
+        url.pathname = "/admin/login";
+        return NextResponse.redirect(url);
+      }
     }
   }
 

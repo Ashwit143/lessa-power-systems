@@ -11,6 +11,8 @@ import { getActiveBanners } from "@/services/banner.service";
 import { getFeaturedProducts } from "@/services/product.service";
 import { SITE_CONFIG } from "@/lib/config";
 import { CATEGORIES } from "@/data/categories";
+import { getSiteSettings } from "@/services/settings.service";
+import { normalizeWhatsAppNumber } from "@/utils/whatsapp";
 
 // ---------------------------------------------------------------------------
 // Metadata
@@ -110,10 +112,13 @@ const WHY_CHOOSE_US = [
 // Homepage (Server Component — fetches data at request time)
 // ---------------------------------------------------------------------------
 export default async function HomePage() {
-  const [banners, featuredProducts] = await Promise.all([
+  const [banners, featuredProducts, settings] = await Promise.all([
     getActiveBanners(),
     getFeaturedProducts(8),
+    getSiteSettings(),
   ]);
+
+  const whatsappNumber = normalizeWhatsAppNumber(settings.whatsappNumber || SITE_CONFIG.whatsappNumber);
 
   return (
     <>
@@ -282,7 +287,7 @@ export default async function HomePage() {
           </p>
           <Button variant="accent" size="xl" asChild>
             <a
-              href={`https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessages.general)}`}
+              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappMessages.general)}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat on WhatsApp for product enquiry"

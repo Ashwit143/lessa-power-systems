@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Zap } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config";
+import type { AppSettings } from "@/services/settings.service";
 
 const PRODUCT_LINKS = [
   { href: "/products/battery", label: "Batteries" },
@@ -18,8 +19,13 @@ const COMPANY_LINKS = [
   { href: "/terms", label: "Terms of Service" },
 ];
 
-export function Footer() {
+export function Footer({ settings }: { settings?: AppSettings }) {
   const currentYear = new Date().getFullYear();
+  
+  const businessName = settings?.companyName || SITE_CONFIG.businessName;
+  const email = settings?.email || SITE_CONFIG.email;
+  const primaryPhone = settings?.primaryPhone || SITE_CONFIG.primaryPhone;
+  const address = settings?.address || SITE_CONFIG.address.full;
 
   return (
     <footer className="bg-neutral-900 text-white" aria-labelledby="footer-heading">
@@ -123,31 +129,28 @@ export function Footer() {
             <ul className="space-y-3" role="list">
               <li>
                 <a
-                  href={`tel:+91${SITE_CONFIG.phones[0]}`}
+                  href={`tel:${primaryPhone}`}
                   className="flex items-start gap-2.5 text-sm text-neutral-400 hover:text-white transition-colors group"
-                  aria-label={`Call ${SITE_CONFIG.phones[0]}`}
+                  aria-label={`Call ${primaryPhone}`}
                 >
                   <Phone className="h-4 w-4 mt-0.5 flex-shrink-0 group-hover:text-accent transition-colors" aria-hidden="true" />
-                  <span>
-                    {SITE_CONFIG.phones[0]}<br />
-                    {SITE_CONFIG.phones[1]}
-                  </span>
+                  <span>{primaryPhone}</span>
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${SITE_CONFIG.email}`}
+                  href={`mailto:${email}`}
                   className="flex items-start gap-2.5 text-sm text-neutral-400 hover:text-white transition-colors group"
-                  aria-label={`Email ${SITE_CONFIG.email}`}
+                  aria-label={`Email ${email}`}
                 >
                   <Mail className="h-4 w-4 mt-0.5 flex-shrink-0 group-hover:text-accent transition-colors" aria-hidden="true" />
-                  {SITE_CONFIG.email}
+                  {email}
                 </a>
               </li>
               <li>
                 <address className="not-italic flex items-start gap-2.5 text-sm text-neutral-400">
                   <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" aria-hidden="true" />
-                  <span>{SITE_CONFIG.address.full}</span>
+                  <span className="whitespace-pre-wrap">{address}</span>
                 </address>
               </li>
             </ul>
@@ -161,7 +164,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-neutral-500">
           <p>
-            © {currentYear} {SITE_CONFIG.businessName}. All rights reserved.
+            © {currentYear} {businessName}. All rights reserved.
           </p>
           <p>
             Authorized Luminous Distributor · Hyderabad, Telangana

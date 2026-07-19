@@ -7,7 +7,6 @@ import { Mail, MapPin, Phone, MessageSquare, Send } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea, Select } from "@/components/ui/forms";
 import { ContactFormSchema, type ContactFormInput } from "@/schemas";
-import { SITE_CONFIG } from "@/lib/config";
 import { toast } from "sonner";
 import { analytics } from "@/lib/analytics";
 

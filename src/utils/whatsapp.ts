@@ -6,18 +6,37 @@
 
 import type { CartItem } from "@/types";
 import { SITE_CONFIG } from "@/lib/config";
+import type { AppSettings } from "@/services/settings.service";
 
 // ---------------------------------------------------------------------------
 // URL construction
 // ---------------------------------------------------------------------------
 
 /**
+ * Normalizes any phone number format into a valid WhatsApp format (e.g., 918121515858).
+ * Strips all non-numeric characters and prepends '91' if it's a 10-digit number.
+ */
+export function normalizeWhatsAppNumber(phone: string): string {
+  let normalized = phone.replace(/\D/g, "");
+  
+  // If the user provided a 10 digit number, assume India (+91)
+  if (normalized.length === 10) {
+    normalized = "91" + normalized;
+  }
+  
+  return normalized;
+}
+
+/**
  * Builds a wa.me deep link with a URL-encoded pre-filled message.
  * Uses universal https://wa.me/ format (works on Android, iOS, desktop).
  */
-export function buildWhatsAppUrl(message: string, number?: string): string {
-  const phoneNumber = number ?? SITE_CONFIG.whatsappNumber;
+export function buildWhatsAppUrl(message: string, number?: string, settings?: AppSettings): string {
+  const rawPhoneNumber = number ?? settings?.whatsappNumber ?? SITE_CONFIG.whatsappNumber;
+  const phoneNumber = normalizeWhatsAppNumber(rawPhoneNumber);
   const encodedMessage = encodeURIComponent(message.trim());
+  
+  console.log(`Generated WhatsApp URL: https://wa.me/${phoneNumber}?text=${encodedMessage}`);
   return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 }
 
@@ -125,27 +144,28 @@ export function formatGeneralEnquiryMessage(): string {
 // Deep link builders — combine message formatter + URL builder
 // ---------------------------------------------------------------------------
 
-export function getCartWhatsAppUrl(items: CartItem[], shippingDetails?: CheckoutData): string {
-  return buildWhatsAppUrl(formatCartOrderMessage(items, shippingDetails));
+export function getCartWhatsAppUrl(items: CartItem[], shippingDetails?: CheckoutData, settings?: AppSettings): string {
+  return buildWhatsAppUrl(formatCartOrderMessage(items, shippingDetails), undefined, settings);
 }
 
 export function getSingleProductWhatsAppUrl(
   productName: string,
-  quantity?: number
+  quantity?: number,
+  settings?: AppSettings
 ): string {
-  return buildWhatsAppUrl(formatSingleProductMessage(productName, quantity));
+  return buildWhatsAppUrl(formatSingleProductMessage(productName, quantity), undefined, settings);
 }
 
 export function getSolarEnquiryWhatsAppUrl(params: {
   name: string;
   phone: string;
   monthlyBillRange?: string;
-}): string {
-  return buildWhatsAppUrl(formatSolarEnquiryMessage(params));
+}, settings?: AppSettings): string {
+  return buildWhatsAppUrl(formatSolarEnquiryMessage(params), undefined, settings);
 }
 
-export function getGeneralEnquiryWhatsAppUrl(): string {
-  return buildWhatsAppUrl(formatGeneralEnquiryMessage());
+export function getGeneralEnquiryWhatsAppUrl(settings?: AppSettings): string {
+  return buildWhatsAppUrl(formatGeneralEnquiryMessage(), undefined, settings);
 }
 
 // ---------------------------------------------------------------------------

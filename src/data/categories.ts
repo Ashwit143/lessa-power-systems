@@ -10,7 +10,7 @@ export const CATEGORIES: Category[] = [
       "Luminous tubular, flat plate, and solar batteries for home UPS systems. Engineered for Indian power conditions — built for frequent, deep cycling without compromising life.",
     valueProp: "Long-lasting power storage for every home",
     icon: "Battery",
-    featuredImage: "/images/categories/batteries.webp",
+    featuredImage: "/images/products/batteries/red charge rc 18000.webp",
     isActive: true,
     sortOrder: 1,
   },

@@ -118,7 +118,7 @@ export const getAllProductSlugs = unstable_cache(
 // ===========================================================================
 
 import { staticSupabase } from "@/lib/supabase/static";
-import { mapProduct } from "@/utils/mapper";
+import { mapProduct, mapProductToDb } from "@/utils/mapper";
 
 async function listProductsFromSupabase(
   filters: ProductFilters,
@@ -249,26 +249,115 @@ async function getAllSlugsFromSupabase(): Promise<{ slug: string; category: stri
 // ---------------------------------------------------------------------------
 // Admin-only: CRUD operations (requires service role key, server-side only)
 // ---------------------------------------------------------------------------
-export async function adminListAllProducts(filters: ProductFilters = {}): Promise<ApiResponse<Product[]>> {
-
-
+export async function adminListProductsPaged(
+  filters: ProductFilters = {},
+  cursor?: { createdAt: string; id: string },
+  direction: "next" | "prev" = "next",
+  limit: number = 10
+): Promise<ApiResponse<{ products: Product[]; totalCount: number; hasNext: boolean; hasPrev: boolean }>> {
   const { createClient } = await import("@/lib/supabase/server");
   const supabase = await createClient();
 
-  let query = supabase.from("products").select("*");
+  // First, get total count with filters applied
+  let countQuery = supabase.from("products").select("id", { count: "exact", head: true });
+  
+  if (filters.category) countQuery = countQuery.eq("category", filters.category);
+  if (filters.status) countQuery = countQuery.eq("status", filters.status);
+  if (filters.search) {
+    countQuery = countQuery.or(`name.ilike.%${filters.search}%,slug.ilike.%${filters.search}%,category.ilike.%${filters.search}%,sku.ilike.%${filters.search}%`);
+  }
+
+  const { count } = await countQuery;
+  const totalCount = count ?? 0;
+
+  // Now, get the paginated data
+  // We fetch limit + 1 to know if there's a next page
+  let query = supabase.from("products").select("*").limit(limit + 1);
 
   if (filters.category) query = query.eq("category", filters.category);
   if (filters.status) query = query.eq("status", filters.status);
   if (filters.search) {
-    query = query.or(`name.ilike.%${filters.search}%`);
+    query = query.or(`name.ilike.%${filters.search}%,slug.ilike.%${filters.search}%,category.ilike.%${filters.search}%,sku.ilike.%${filters.search}%`);
   }
 
-  query = query.order("created_at", { ascending: false });
+  const isAscending = direction === "prev";
 
-  const { data, error, count } = await query;
+  if (cursor) {
+    if (direction === "next") {
+      // (created_at, id) < (cursor.createdAt, cursor.id)
+      query = query.or(`created_at.lt.${cursor.createdAt},and(created_at.eq.${cursor.createdAt},id.lt.${cursor.id})`);
+    } else {
+      // (created_at, id) > (cursor.createdAt, cursor.id)
+      query = query.or(`created_at.gt.${cursor.createdAt},and(created_at.eq.${cursor.createdAt},id.gt.${cursor.id})`);
+    }
+  }
+
+  query = query.order("created_at", { ascending: isAscending }).order("id", { ascending: isAscending });
+
+  const { data, error } = await query;
 
   if (error) return { data: null, error: error.message, success: false };
+
+  let products = (data?.map(mapProduct) as Product[]) ?? [];
+  const hasMore = products.length > limit;
+
+  if (hasMore) {
+    products.pop(); // Remove the extra item
+  }
+
+  if (direction === "prev") {
+    products = products.reverse(); // Reverse back to DESC order
+  }
+
+  // If there's no cursor, we are on page 1, so hasPrev is false. 
+  // hasNext is true if hasMore is true.
+  // If direction === 'next', hasPrev is true (since we moved forward), hasNext is hasMore.
+  // If direction === 'prev', hasNext is true (since we moved backward from something), hasPrev is hasMore.
+  
+  const hasNext = direction === "next" ? hasMore : true;
+  const hasPrev = cursor ? (direction === "prev" ? hasMore : true) : false;
+
+  return {
+    data: {
+      products,
+      totalCount,
+      hasNext,
+      hasPrev,
+    },
+    error: null,
+    success: true,
+  };
+}
+
+export async function adminListAllProducts(filters: ProductFilters = {}): Promise<ApiResponse<Product[]>> {
+  // Legacy function just in case
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+  let query = supabase.from("products").select("*");
+  if (filters.category) query = query.eq("category", filters.category);
+  if (filters.status) query = query.eq("status", filters.status);
+  if (filters.search) {
+    query = query.or(`name.ilike.%${filters.search}%,slug.ilike.%${filters.search}%,category.ilike.%${filters.search}%,sku.ilike.%${filters.search}%`);
+  }
+  query = query.order("created_at", { ascending: false }).order("id", { ascending: false });
+  const { data, error } = await query;
+  if (error) return { data: null, error: error.message, success: false };
   return { data: (data?.map(mapProduct) as Product[]) ?? [], error: null, success: true };
+}
+
+
+export async function adminGetProductById(id: string): Promise<ApiResponse<Product>> {
+  const { createClient } = await import("@/lib/supabase/server");
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) return { data: null, error: error.message, success: false };
+  return { data: mapProduct(data) as Product, error: null, success: true };
 }
 
 export async function adminCreateProduct(product: Omit<Product, "id" | "createdAt" | "updatedAt">): Promise<ApiResponse<Product>> {
@@ -277,9 +366,11 @@ export async function adminCreateProduct(product: Omit<Product, "id" | "createdA
   const { createClient } = await import("@/lib/supabase/server");
   const supabase = await createClient();
 
+  const dbPayload = mapProductToDb({ ...product, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
+
   const { data, error } = await supabase
     .from("products")
-    .insert({ ...product, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+    .insert(dbPayload)
     .select()
     .single();
 
@@ -294,9 +385,11 @@ export async function adminUpdateProduct(id: string, updates: Partial<Product>):
   const { createClient } = await import("@/lib/supabase/server");
   const supabase = await createClient();
 
+  const dbPayload = mapProductToDb({ ...updates, updatedAt: new Date().toISOString() });
+
   const { data, error } = await supabase
     .from("products")
-    .update({ ...updates, updated_at: new Date().toISOString() })
+    .update(dbPayload)
     .eq("id", id)
     .select()
     .single();
