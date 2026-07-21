@@ -31,6 +31,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     sku: initialData?.sku || "",
     status: (initialData?.status || "published") as ProductStatus,
     isActive: initialData?.isActive ?? true,
+    isBestSeller: initialData?.isBestSeller ?? false,
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -127,6 +128,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         sku: formData.sku,
         status: formData.status,
         isActive: formData.isActive,
+        isBestSeller: formData.isBestSeller,
       };
 
       let result;
@@ -277,6 +279,19 @@ export default function ProductForm({ initialData }: ProductFormProps) {
           options={[
             { value: "published", label: "Published" },
             { value: "draft", label: "Draft" },
+          ]}
+          required
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Select
+          label="Best Seller"
+          value={formData.isBestSeller ? "true" : "false"}
+          onChange={(e) => setFormData((prev) => ({ ...prev, isBestSeller: e.target.value === "true" }))}
+          options={[
+            { value: "false", label: "No" },
+            { value: "true", label: "Yes" },
           ]}
           required
         />

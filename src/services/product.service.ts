@@ -15,6 +15,7 @@ export interface ProductFilters {
   category?: ProductCategory;
   subcategory?: string;
   featured?: boolean;
+  isBestSeller?: boolean;
   status?: "draft" | "published";
   search?: string;
 }
@@ -127,11 +128,12 @@ async function listProductsFromSupabase(
 ): Promise<ProductListResult> {
   let query = staticSupabase
     .from("products")
-    .select("id, name, slug, category, short_description, featured_image, specs, featured, status, is_active", { count: "exact" });
+    .select("id, name, slug, category, short_description, featured_image, specs, featured, is_best_seller, status, is_active", { count: "exact" });
 
   if (filters.category) query = query.eq("category", filters.category);
   if (filters.subcategory) query = query.eq("subcategory", filters.subcategory);
   if (filters.featured !== undefined) query = query.eq("featured", filters.featured);
+  if (filters.isBestSeller !== undefined) query = query.eq("is_best_seller", filters.isBestSeller);
   if (filters.status) {
     query = query.eq("status", filters.status);
   } else {
@@ -262,6 +264,7 @@ export async function adminListProductsPaged(
   let countQuery = supabase.from("products").select("id", { count: "exact", head: true });
   
   if (filters.category) countQuery = countQuery.eq("category", filters.category);
+  if (filters.isBestSeller !== undefined) countQuery = countQuery.eq("is_best_seller", filters.isBestSeller);
   if (filters.status) countQuery = countQuery.eq("status", filters.status);
   if (filters.search) {
     countQuery = countQuery.or(`name.ilike.%${filters.search}%,slug.ilike.%${filters.search}%,category.ilike.%${filters.search}%,sku.ilike.%${filters.search}%`);
@@ -275,6 +278,7 @@ export async function adminListProductsPaged(
   let query = supabase.from("products").select("*").limit(limit + 1);
 
   if (filters.category) query = query.eq("category", filters.category);
+  if (filters.isBestSeller !== undefined) query = query.eq("is_best_seller", filters.isBestSeller);
   if (filters.status) query = query.eq("status", filters.status);
   if (filters.search) {
     query = query.or(`name.ilike.%${filters.search}%,slug.ilike.%${filters.search}%,category.ilike.%${filters.search}%,sku.ilike.%${filters.search}%`);
@@ -335,6 +339,7 @@ export async function adminListAllProducts(filters: ProductFilters = {}): Promis
   const supabase = await createClient();
   let query = supabase.from("products").select("*");
   if (filters.category) query = query.eq("category", filters.category);
+  if (filters.isBestSeller !== undefined) query = query.eq("is_best_seller", filters.isBestSeller);
   if (filters.status) query = query.eq("status", filters.status);
   if (filters.search) {
     query = query.or(`name.ilike.%${filters.search}%,slug.ilike.%${filters.search}%,category.ilike.%${filters.search}%,sku.ilike.%${filters.search}%`);

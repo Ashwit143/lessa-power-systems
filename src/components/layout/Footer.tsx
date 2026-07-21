@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Zap } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config";
 import type { AppSettings } from "@/services/settings.service";
 
@@ -49,44 +49,55 @@ export function Footer({ settings }: { settings?: AppSettings }) {
               Authorized Luminous distributor serving Hyderabad since 2009. Genuine products, local service, WhatsApp-first ordering.
             </p>
 
-            {/* Social links — shown when client provides URLs */}
-            {(SITE_CONFIG.socialLinks.instagram || SITE_CONFIG.socialLinks.facebook || SITE_CONFIG.socialLinks.youtube) && (
-              <div className="flex items-center gap-3 mt-4" aria-label="Social media links">
-                {SITE_CONFIG.socialLinks.instagram && (
-                  <a
-                    href={SITE_CONFIG.socialLinks.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/10 rounded-md transition-colors border border-white/10"
-                    aria-label="Follow us on Instagram"
-                  >
-                    Instagram
-                  </a>
-                )}
-                {SITE_CONFIG.socialLinks.facebook && (
-                  <a
-                    href={SITE_CONFIG.socialLinks.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/10 rounded-md transition-colors border border-white/10"
-                    aria-label="Follow us on Facebook"
-                  >
-                    Facebook
-                  </a>
-                )}
-                {SITE_CONFIG.socialLinks.youtube && (
-                  <a
-                    href={SITE_CONFIG.socialLinks.youtube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/10 rounded-md transition-colors border border-white/10"
-                    aria-label="Follow us on YouTube"
-                  >
-                    YouTube
-                  </a>
-                )}
+            {/* Follow Us */}
+            <div className="mt-8">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Follow Us</h3>
+              <div className="flex items-center gap-4" aria-label="Social media links">
+                <a
+                  href="https://www.instagram.com/leesapowersystems"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-neutral-400 hover:text-white hover:bg-white/10 rounded-full transition-colors border border-white/10"
+                  aria-label="Follow us on Instagram"
+                >
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a
+                  href="https://www.facebook.com/share/1DDvgimUwQ/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-neutral-400 hover:text-white hover:bg-white/10 rounded-full transition-colors border border-white/10"
+                  aria-label="Follow us on Facebook"
+                >
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <a
+                  href="https://www.youtube.com/@leesasolarsolutions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-neutral-400 hover:text-white hover:bg-white/10 rounded-full transition-colors border border-white/10"
+                  aria-label="Follow us on YouTube"
+                >
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </a>
+                <a
+                  href="https://www.threads.com/@leesapowersystems"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-neutral-400 hover:text-white hover:bg-white/10 rounded-full transition-colors border border-white/10 flex items-center justify-center"
+                  aria-label="Follow us on Threads"
+                >
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/>
+                    <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"/>
+                    <path d="M12 9V2"/>
+                    <path d="M12 15V22"/>
+                    <path d="M5.5 5.5L8.5 8.5"/>
+                    <path d="M15.5 15.5L18.5 18.5"/>
+                  </svg>
+                </a>
               </div>
-            )}
+            </div>
           </div>
 
           {/* Products */}

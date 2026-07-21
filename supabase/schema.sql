@@ -53,11 +53,13 @@ CREATE TABLE IF NOT EXISTS products (
   meta_description TEXT,
   alt_text        TEXT,
   is_demo         BOOLEAN DEFAULT FALSE,
+  is_best_seller  BOOLEAN DEFAULT FALSE,
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- Index for common queries
+CREATE INDEX IF NOT EXISTS idx_products_is_best_seller ON products(is_best_seller);
 CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
 CREATE INDEX IF NOT EXISTS idx_products_status ON products(status);
 CREATE INDEX IF NOT EXISTS idx_products_featured ON products(featured);

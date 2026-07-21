@@ -3,6 +3,9 @@ import Link from "next/link";
 import { TrendingUp, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SITE_CONFIG } from "@/lib/config";
+import { listProducts } from "@/services/product.service";
+import { ProductCard, ProductCardSkeleton } from "@/features/products/ProductCard";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: `Best Sellers — ${SITE_CONFIG.businessName}`,
@@ -10,10 +13,9 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_CONFIG.siteUrl}/best-sellers` },
 };
 
-export default function BestSellersPage() {
-  // In the future, fetch best selling products here and conditionally render
-  // the empty state or the product grid.
-  const bestSellers: any[] = [];
+export default async function BestSellersPage() {
+  const result = await listProducts({ isBestSeller: true, status: "published" }, 1, 100);
+  const bestSellers = result.products;
 
   return (
     <div className="min-h-[60vh] bg-neutral-50 flex flex-col">
@@ -31,7 +33,9 @@ export default function BestSellersPage() {
       <div className="flex-grow container-site py-16 flex items-center justify-center">
         {bestSellers.length > 0 ? (
           <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {/* Map through bestSellers and render ProductCard components here */}
+            {bestSellers.map((product, index) => (
+              <ProductCard key={product.id} product={product} priority={index < 4} />
+            ))}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center max-w-md mx-auto p-8 bg-white rounded-2xl border border-neutral-200 shadow-sm">

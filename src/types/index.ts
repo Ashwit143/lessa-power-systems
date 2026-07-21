@@ -60,6 +60,9 @@ export interface Product {
 
   // Demo flag — set true on all placeholder catalog items
   isDemo?: boolean;
+
+  // Best seller
+  isBestSeller?: boolean;
 }
 
 // ---------------------------------------------------------------------------
