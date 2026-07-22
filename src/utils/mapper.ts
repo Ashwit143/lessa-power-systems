@@ -15,7 +15,10 @@ export function mapProduct(row: any): any {
     isActive: row.is_active,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
-    useCases: row.use_cases,
+    useCases: row.use_cases || [],
+    specs: typeof row.specs === 'string' ? JSON.parse(row.specs) : (row.specs || []),
+    gallery: row.gallery || [],
+    features: row.features || [],
   };
 }
 
