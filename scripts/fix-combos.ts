@@ -6,6 +6,11 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error("Missing Supabase environment variables.");
+}
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function fix() {
@@ -14,7 +19,7 @@ async function fix() {
     console.error(error);
     return;
   }
-  
+
   for (const combo of combos) {
     if (typeof combo.specs === 'string') {
       try {
@@ -25,7 +30,7 @@ async function fix() {
         console.error(`Failed to parse specs for ${combo.id}`);
       }
     } else {
-        console.log(`Specs for ${combo.id} is not a string, skipping.`);
+      console.log(`Specs for ${combo.id} is not a string, skipping.`);
     }
   }
 }
