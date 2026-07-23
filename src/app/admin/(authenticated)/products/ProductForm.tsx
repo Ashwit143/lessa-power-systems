@@ -32,6 +32,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     status: (initialData?.status || "published") as ProductStatus,
     isActive: initialData?.isActive ?? true,
     isBestSeller: initialData?.isBestSeller ?? false,
+    price: initialData?.price || "",
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -129,6 +130,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         status: formData.status,
         isActive: formData.isActive,
         isBestSeller: formData.isBestSeller,
+        price: formData.price ? parseFloat(formData.price as string) : undefined,
       };
 
       let result;
@@ -294,6 +296,15 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             { value: "true", label: "Yes" },
           ]}
           required
+        />
+        <Input
+          label="Price (₹)"
+          type="number"
+          min="0"
+          step="0.01"
+          value={formData.price}
+          onChange={(e) => setFormData((prev) => ({ ...prev, price: e.target.value }))}
+          placeholder="e.g., 12500"
         />
       </div>
 

@@ -92,13 +92,25 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         {/* Short description */}
         <p className="text-neutral-600 leading-relaxed">{product.shortDescription}</p>
 
-        {/* Price note */}
-        <div className="flex items-center gap-2 text-sm text-neutral-500 bg-neutral-50 rounded-lg px-4 py-3">
-          <Tag className="h-4 w-4 text-accent" aria-hidden="true" />
-          <span>
-            Contact us on WhatsApp for the best price and current availability.
-          </span>
-        </div>
+        {/* Price */}
+        {product.price ? (
+          <div className="flex items-center gap-2">
+            <span className="text-3xl font-bold text-neutral-900">
+              {new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0,
+              }).format(product.price)}
+            </span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2 text-sm text-neutral-500 bg-neutral-50 rounded-lg px-4 py-3">
+            <Tag className="h-4 w-4 text-accent" aria-hidden="true" />
+            <span>
+              Contact us on WhatsApp for the best price and current availability.
+            </span>
+          </div>
+        )}
 
         {/* CTA buttons */}
         <div className="flex flex-col gap-3">

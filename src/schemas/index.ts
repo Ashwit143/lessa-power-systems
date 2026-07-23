@@ -50,6 +50,7 @@ export const ProductSchema = z.object({
 
   // Commerce (reserved, optional)
   sku: z.string().optional(),
+  price: z.number().min(0, "Price cannot be negative").optional(),
   priceRange: z.string().optional(),
   stockStatus: z.enum(["in_stock", "out_of_stock", "on_request"]).optional(),
 

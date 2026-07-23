@@ -5,6 +5,7 @@ export function mapProduct(row: any): any {
     shortDescription: row.short_description,
     featuredImage: row.featured_image,
     pdfDatasheet: row.pdf_datasheet,
+    price: row.price,
     priceRange: row.price_range,
     stockStatus: row.stock_status,
     seoTitle: row.seo_title,
@@ -32,6 +33,7 @@ export function mapProductToDb(product: any): any {
   if ('shortDescription' in product) { dbRow.short_description = product.shortDescription; delete dbRow.shortDescription; }
   if ('featuredImage' in product) { dbRow.featured_image = product.featuredImage; delete dbRow.featuredImage; }
   if ('pdfDatasheet' in product) { dbRow.pdf_datasheet = product.pdfDatasheet; delete dbRow.pdfDatasheet; }
+  if ('price' in product) { dbRow.price = product.price; delete dbRow.price; }
   if ('priceRange' in product) { dbRow.price_range = product.priceRange; delete dbRow.priceRange; }
   if ('stockStatus' in product) { dbRow.stock_status = product.stockStatus; delete dbRow.stockStatus; }
   if ('seoTitle' in product) { dbRow.seo_title = product.seoTitle; delete dbRow.seoTitle; }

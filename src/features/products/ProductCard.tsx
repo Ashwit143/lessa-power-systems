@@ -107,11 +107,23 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           </ul>
         )}
 
-        {/* Price note — no fabricated pricing */}
-        <div className="flex items-center gap-1.5 text-xs text-neutral-500">
-          <Tag className="h-3.5 w-3.5" aria-hidden="true" />
-          <span>Contact for best price</span>
-        </div>
+        {/* Price */}
+        {product.price ? (
+          <div className="flex items-center gap-1.5 text-lg font-bold text-neutral-900">
+            <span>
+              {new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0,
+              }).format(product.price)}
+            </span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-1.5 text-xs text-neutral-500">
+            <Tag className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Contact for best price</span>
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex flex-col gap-2 mt-auto pt-4 border-t border-neutral-200">

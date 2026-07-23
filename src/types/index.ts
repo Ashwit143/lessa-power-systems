@@ -46,6 +46,7 @@ export interface Product {
 
   // Commerce (optional — reserved for future phases)
   sku?: string;
+  price?: number;
   priceRange?: string; // e.g. "₹8,000–₹12,000" — only set if client confirms
   stockStatus?: "in_stock" | "out_of_stock" | "on_request";
 
