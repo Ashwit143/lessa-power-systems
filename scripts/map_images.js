@@ -202,7 +202,10 @@ async function run() {
     for (const update of updates) {
       const { error: updateError } = await supabase
         .from('products')
-        .update({ featured_image: update.featured_image })
+        .update({ 
+          featured_image: update.featured_image,
+          gallery: [update.featured_image]
+        })
         .eq('id', update.id);
         
       if (!updateError) successCount++;
